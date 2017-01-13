@@ -9,13 +9,28 @@ namespace FoundationMM
 {
     public partial class Window : Form
     {
-        public delegate void appendNewOutputCallback(string output);
+        public delegate void appendNewOutputCallback(object control, dynamic output);
         public delegate void showMessageBoxCallback(string output);
 
-        private void appendNewOutput(string output)
+        private void appendNewOutput(object control, dynamic output)
         {
-            textBox1.AppendText(output + Environment.NewLine);
+            try
+            {
+                ((TextBox)control).AppendText(output + Environment.NewLine);
+            }
+            catch
+            {
+                try
+                {
+                    ((RichTextBox)control).Text = output + Environment.NewLine;
+                }
+                catch
+                {
+                    ((Button)control).Enabled = output;
+                }
+            }
         }
+
 
         private void showMessageBox(string output)
         {

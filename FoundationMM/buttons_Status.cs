@@ -29,13 +29,25 @@ namespace FoundationMM
                     modNumberLabel.Text = modCount + " " + lang_ModsAvailable;
                 }
             }
-            else
+            else if (enabledTab == 1)
             {
                 if (refreshinprog == false)
                 {
                     refreshinprog = true;
                     listView2.Items.Clear();
                     dlFilesWorker.RunWorkerAsync(new string[] { Path.Combine(System.IO.Directory.GetCurrentDirectory(), "mods", "tagmods") });
+                }
+            }
+            else
+            {
+                if (serverRefreshProg == false)
+                {
+                    // True == the server list is being updated; false == it is not being updated.
+                    // This is needed so that we can check it before starting the background worker.
+                    serverRefreshProg = true;
+
+                    listView3.Items.Clear();
+                    serverBrowserWorker.RunWorkerAsync(new string[] { Path.Combine(System.IO.Directory.GetCurrentDirectory(), "mods", "tagmods") });
                 }
             }
         }

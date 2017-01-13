@@ -91,12 +91,46 @@
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.button16 = new System.Windows.Forms.Button();
             this.columnDL_downloads = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.listView3 = new System.Windows.Forms.ListView();
+            this.Locked = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Server = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Host = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Ping = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Map = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Game = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Variant = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Players = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.panel7 = new System.Windows.Forms.Panel();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.button10 = new System.Windows.Forms.Button();
+            this.richTextBox2 = new System.Windows.Forms.RichTextBox();
+            this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.listView5 = new System.Windows.Forms.ListView();
+            this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.listView4 = new System.Windows.Forms.ListView();
+            this.Player = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Score = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.K = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.D = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.A = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.button9 = new System.Windows.Forms.Button();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.button11 = new System.Windows.Forms.Button();
+            this.button8 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.devModeGroupBox.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            this.statusStrip1.SuspendLayout();
             this.outputPanel.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -109,63 +143,16 @@
             this.panel5.SuspendLayout();
             this.panel2.SuspendLayout();
             this.groupBox7.SuspendLayout();
+            this.tabPage3.SuspendLayout();
+            this.panel7.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            this.groupBox9.SuspendLayout();
+            this.groupBox8.SuspendLayout();
+            this.panel3.SuspendLayout();
+            this.groupBox5.SuspendLayout();
+            this.groupBox4.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // listView1
-            // 
-            this.listView1.AllowDrop = true;
-            this.listView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.listView1.CheckBoxes = true;
-            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.header_Name,
-            this.header_Author,
-            this.header_Version,
-            this.header_Description,
-            this.header_Warnings,
-            this.header_Location});
-            this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listView1.FullRowSelect = true;
-            this.listView1.Location = new System.Drawing.Point(0, 0);
-            this.listView1.MultiSelect = false;
-            this.listView1.Name = "listView1";
-            this.listView1.ShowItemToolTips = true;
-            this.listView1.Size = new System.Drawing.Size(623, 391);
-            this.listView1.TabIndex = 1;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.Details;
-            this.listView1.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.listView1_ColumnClick);
-            this.listView1.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.listView1_ItemCheck);
-            this.listView1.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
-            this.listView1.Click += new System.EventHandler(this.listView1_SelectedIndexChanged);
-            // 
-            // header_Name
-            // 
-            this.header_Name.Text = "Name";
-            this.header_Name.Width = 150;
-            // 
-            // header_Author
-            // 
-            this.header_Author.Text = "Author";
-            this.header_Author.Width = 90;
-            // 
-            // header_Version
-            // 
-            this.header_Version.Text = "Version";
-            // 
-            // header_Description
-            // 
-            this.header_Description.Text = "Description";
-            this.header_Description.Width = 200;
-            // 
-            // header_Warnings
-            // 
-            this.header_Warnings.Text = "Warnings";
-            this.header_Warnings.Width = 120;
-            // 
-            // header_Location
-            // 
-            this.header_Location.Text = "Location";
-            this.header_Location.Width = 150;
             // 
             // panel1
             // 
@@ -175,9 +162,9 @@
             this.panel1.Controls.Add(this.groupBox2);
             this.panel1.Controls.Add(this.groupBox1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel1.Location = new System.Drawing.Point(623, 0);
+            this.panel1.Location = new System.Drawing.Point(832, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(158, 463);
+            this.panel1.Size = new System.Drawing.Size(158, 585);
             this.panel1.TabIndex = 1;
             // 
             // devModeGroupBox
@@ -185,7 +172,7 @@
             this.devModeGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.devModeGroupBox.Controls.Add(this.toggleCmdWindows);
             this.devModeGroupBox.Controls.Add(this.toggleFileRestoration);
-            this.devModeGroupBox.Location = new System.Drawing.Point(3, 300);
+            this.devModeGroupBox.Location = new System.Drawing.Point(3, 419);
             this.devModeGroupBox.Name = "devModeGroupBox";
             this.devModeGroupBox.Size = new System.Drawing.Size(152, 77);
             this.devModeGroupBox.TabIndex = 2;
@@ -218,7 +205,7 @@
             this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox3.Controls.Add(this.button5);
             this.groupBox3.Controls.Add(this.button6);
-            this.groupBox3.Location = new System.Drawing.Point(3, 383);
+            this.groupBox3.Location = new System.Drawing.Point(3, 502);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(152, 77);
             this.groupBox3.TabIndex = 3;
@@ -340,46 +327,15 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.upClick);
             // 
-            // statusStrip1
+            // outputPanel
             // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.refreshMods,
-            this.modNumberLabel,
-            this.toolStripStatusLabel1,
-            this.percentageLabel});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 489);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.ShowItemToolTips = true;
-            this.statusStrip1.Size = new System.Drawing.Size(789, 22);
-            this.statusStrip1.TabIndex = 2;
-            // 
-            // refreshMods
-            // 
-            this.refreshMods.AutoToolTip = false;
-            this.refreshMods.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.refreshMods.DropDownButtonWidth = 0;
-            this.refreshMods.Image = global::FoundationMM.Properties.Resources.ico_refresh;
-            this.refreshMods.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.refreshMods.Name = "refreshMods";
-            this.refreshMods.Size = new System.Drawing.Size(21, 20);
-            this.refreshMods.Click += new System.EventHandler(this.refreshModsClick);
-            // 
-            // modNumberLabel
-            // 
-            this.modNumberLabel.Name = "modNumberLabel";
-            this.modNumberLabel.Size = new System.Drawing.Size(95, 17);
-            this.modNumberLabel.Text = "0 mods available";
-            // 
-            // toolStripStatusLabel1
-            // 
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(658, 17);
-            this.toolStripStatusLabel1.Spring = true;
-            // 
-            // percentageLabel
-            // 
-            this.percentageLabel.Name = "percentageLabel";
-            this.percentageLabel.Size = new System.Drawing.Size(0, 17);
+            this.outputPanel.Controls.Add(this.textBox1);
+            this.outputPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.outputPanel.Location = new System.Drawing.Point(0, 287);
+            this.outputPanel.Name = "outputPanel";
+            this.outputPanel.Size = new System.Drawing.Size(832, 226);
+            this.outputPanel.TabIndex = 4;
+            this.outputPanel.Visible = false;
             // 
             // textBox1
             // 
@@ -390,29 +346,20 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
             this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox1.Size = new System.Drawing.Size(623, 226);
+            this.textBox1.Size = new System.Drawing.Size(832, 226);
             this.textBox1.TabIndex = 0;
-            // 
-            // outputPanel
-            // 
-            this.outputPanel.Controls.Add(this.textBox1);
-            this.outputPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.outputPanel.Location = new System.Drawing.Point(0, 165);
-            this.outputPanel.Name = "outputPanel";
-            this.outputPanel.Size = new System.Drawing.Size(623, 226);
-            this.outputPanel.TabIndex = 4;
-            this.outputPanel.Visible = false;
-            this.outputPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.outputPanel_Paint);
             // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(789, 489);
+            this.tabControl1.Size = new System.Drawing.Size(998, 611);
             this.tabControl1.TabIndex = 5;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
@@ -424,10 +371,66 @@
             this.tabPage1.Controls.Add(this.panel1);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Size = new System.Drawing.Size(781, 463);
+            this.tabPage1.Size = new System.Drawing.Size(990, 585);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "My Mods";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // listView1
+            // 
+            this.listView1.AllowDrop = true;
+            this.listView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.listView1.CheckBoxes = true;
+            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.header_Name,
+            this.header_Author,
+            this.header_Version,
+            this.header_Description,
+            this.header_Warnings,
+            this.header_Location});
+            this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listView1.FullRowSelect = true;
+            this.listView1.Location = new System.Drawing.Point(0, 0);
+            this.listView1.MultiSelect = false;
+            this.listView1.Name = "listView1";
+            this.listView1.ShowItemToolTips = true;
+            this.listView1.Size = new System.Drawing.Size(832, 513);
+            this.listView1.TabIndex = 1;
+            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.listView1.View = System.Windows.Forms.View.Details;
+            this.listView1.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.listView1_ColumnClick);
+            this.listView1.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.listView1_ItemCheck);
+            this.listView1.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
+            this.listView1.Click += new System.EventHandler(this.listView1_SelectedIndexChanged);
+            // 
+            // header_Name
+            // 
+            this.header_Name.Text = "Name";
+            this.header_Name.Width = 150;
+            // 
+            // header_Author
+            // 
+            this.header_Author.Text = "Author";
+            this.header_Author.Width = 90;
+            // 
+            // header_Version
+            // 
+            this.header_Version.Text = "Version";
+            // 
+            // header_Description
+            // 
+            this.header_Description.Text = "Description";
+            this.header_Description.Width = 200;
+            // 
+            // header_Warnings
+            // 
+            this.header_Warnings.Text = "Warnings";
+            this.header_Warnings.Width = 120;
+            // 
+            // header_Location
+            // 
+            this.header_Location.Text = "Location";
+            this.header_Location.Width = 150;
             // 
             // infobar
             // 
@@ -436,17 +439,17 @@
             this.infobar.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 72F));
             this.infobar.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 45F));
             this.infobar.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 55F));
-            this.infobar.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 131F));
+            this.infobar.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 171F));
             this.infobar.Controls.Add(this.infobarIcon, 0, 0);
             this.infobar.Controls.Add(this.infobarLPane, 1, 0);
             this.infobar.Controls.Add(this.infobarRPane, 2, 0);
             this.infobar.Controls.Add(this.infobarImage, 3, 0);
             this.infobar.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.infobar.Location = new System.Drawing.Point(0, 391);
+            this.infobar.Location = new System.Drawing.Point(0, 513);
             this.infobar.Name = "infobar";
             this.infobar.RowCount = 1;
             this.infobar.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.infobar.Size = new System.Drawing.Size(623, 72);
+            this.infobar.Size = new System.Drawing.Size(832, 72);
             this.infobar.TabIndex = 5;
             // 
             // infobarIcon
@@ -467,7 +470,7 @@
             this.infobarLPane.Dock = System.Windows.Forms.DockStyle.Fill;
             this.infobarLPane.Location = new System.Drawing.Point(75, 3);
             this.infobarLPane.Name = "infobarLPane";
-            this.infobarLPane.Size = new System.Drawing.Size(183, 66);
+            this.infobarLPane.Size = new System.Drawing.Size(259, 66);
             this.infobarLPane.TabIndex = 1;
             // 
             // infobarCredits
@@ -505,9 +508,9 @@
             // 
             this.infobarRPane.Controls.Add(this.infobarDesc);
             this.infobarRPane.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.infobarRPane.Location = new System.Drawing.Point(264, 3);
+            this.infobarRPane.Location = new System.Drawing.Point(340, 3);
             this.infobarRPane.Name = "infobarRPane";
-            this.infobarRPane.Size = new System.Drawing.Size(225, 66);
+            this.infobarRPane.Size = new System.Drawing.Size(317, 66);
             this.infobarRPane.TabIndex = 2;
             // 
             // infobarDesc
@@ -519,17 +522,17 @@
             this.infobarDesc.Name = "infobarDesc";
             this.infobarDesc.ReadOnly = true;
             this.infobarDesc.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.infobarDesc.Size = new System.Drawing.Size(225, 66);
+            this.infobarDesc.Size = new System.Drawing.Size(317, 66);
             this.infobarDesc.TabIndex = 1;
             this.infobarDesc.Text = "infobarDesc";
             // 
             // infobarImage
             // 
             this.infobarImage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.infobarImage.Location = new System.Drawing.Point(492, 0);
+            this.infobarImage.Location = new System.Drawing.Point(660, 0);
             this.infobarImage.Margin = new System.Windows.Forms.Padding(0);
             this.infobarImage.Name = "infobarImage";
-            this.infobarImage.Size = new System.Drawing.Size(131, 72);
+            this.infobarImage.Size = new System.Drawing.Size(172, 72);
             this.infobarImage.TabIndex = 3;
             this.infobarImage.MouseClick += new System.Windows.Forms.MouseEventHandler(this.infobarImage_MouseClick);
             // 
@@ -540,7 +543,7 @@
             this.tabPage2.Controls.Add(this.panel2);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Size = new System.Drawing.Size(781, 463);
+            this.tabPage2.Size = new System.Drawing.Size(990, 585);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Downloadable Mods";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -564,7 +567,7 @@
             this.listView2.MultiSelect = false;
             this.listView2.Name = "listView2";
             this.listView2.ShowItemToolTips = true;
-            this.listView2.Size = new System.Drawing.Size(623, 391);
+            this.listView2.Size = new System.Drawing.Size(832, 513);
             this.listView2.TabIndex = 1;
             this.listView2.UseCompatibleStateImageBehavior = false;
             this.listView2.View = System.Windows.Forms.View.Details;
@@ -609,17 +612,17 @@
             this.infobar2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 72F));
             this.infobar2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 45F));
             this.infobar2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 55F));
-            this.infobar2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 131F));
+            this.infobar2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 172F));
             this.infobar2.Controls.Add(this.infobar2Icon, 0, 0);
             this.infobar2.Controls.Add(this.panel4, 1, 0);
             this.infobar2.Controls.Add(this.panel5, 2, 0);
             this.infobar2.Controls.Add(this.infobar2Image, 3, 0);
             this.infobar2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.infobar2.Location = new System.Drawing.Point(0, 391);
+            this.infobar2.Location = new System.Drawing.Point(0, 513);
             this.infobar2.Name = "infobar2";
             this.infobar2.RowCount = 1;
             this.infobar2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.infobar2.Size = new System.Drawing.Size(623, 72);
+            this.infobar2.Size = new System.Drawing.Size(832, 72);
             this.infobar2.TabIndex = 6;
             this.infobar2.Visible = false;
             // 
@@ -641,7 +644,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(75, 3);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(183, 66);
+            this.panel4.Size = new System.Drawing.Size(258, 66);
             this.panel4.TabIndex = 1;
             // 
             // infobar2Credits
@@ -679,9 +682,9 @@
             // 
             this.panel5.Controls.Add(this.infobar2Desc);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel5.Location = new System.Drawing.Point(264, 3);
+            this.panel5.Location = new System.Drawing.Point(339, 3);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(225, 66);
+            this.panel5.Size = new System.Drawing.Size(317, 66);
             this.panel5.TabIndex = 2;
             // 
             // infobar2Desc
@@ -693,17 +696,17 @@
             this.infobar2Desc.Name = "infobar2Desc";
             this.infobar2Desc.ReadOnly = true;
             this.infobar2Desc.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.infobar2Desc.Size = new System.Drawing.Size(225, 66);
+            this.infobar2Desc.Size = new System.Drawing.Size(317, 66);
             this.infobar2Desc.TabIndex = 1;
             this.infobar2Desc.Text = "infobar2Desc";
             // 
             // infobar2Image
             // 
             this.infobar2Image.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.infobar2Image.Location = new System.Drawing.Point(492, 0);
+            this.infobar2Image.Location = new System.Drawing.Point(659, 0);
             this.infobar2Image.Margin = new System.Windows.Forms.Padding(0);
             this.infobar2Image.Name = "infobar2Image";
-            this.infobar2Image.Size = new System.Drawing.Size(131, 72);
+            this.infobar2Image.Size = new System.Drawing.Size(173, 72);
             this.infobar2Image.TabIndex = 3;
             this.infobar2Image.MouseClick += new System.Windows.Forms.MouseEventHandler(this.infobar2Image_MouseClick);
             // 
@@ -712,9 +715,9 @@
             this.panel2.BackColor = System.Drawing.SystemColors.Control;
             this.panel2.Controls.Add(this.groupBox7);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel2.Location = new System.Drawing.Point(623, 0);
+            this.panel2.Location = new System.Drawing.Point(832, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(158, 463);
+            this.panel2.Size = new System.Drawing.Size(158, 585);
             this.panel2.TabIndex = 2;
             // 
             // groupBox7
@@ -736,16 +739,383 @@
             this.button16.Text = "Download Checked Mods";
             this.button16.UseVisualStyleBackColor = true;
             this.button16.Click += new System.EventHandler(this.button16_Click);
-            // 
+            //
             // columnDL_downloads
             // 
             this.columnDL_downloads.Text = "Users";
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.listView3);
+            this.tabPage3.Controls.Add(this.panel7);
+            this.tabPage3.Controls.Add(this.panel3);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Margin = new System.Windows.Forms.Padding(0);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(990, 585);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "Server Browser";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // listView3
+            // 
+            this.listView3.AllowDrop = true;
+            this.listView3.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.listView3.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.Locked,
+            this.Server,
+            this.Host,
+            this.Ping,
+            this.Map,
+            this.Game,
+            this.Variant,
+            this.Players});
+            this.listView3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listView3.FullRowSelect = true;
+            this.listView3.Location = new System.Drawing.Point(0, 0);
+            this.listView3.Margin = new System.Windows.Forms.Padding(0);
+            this.listView3.MultiSelect = false;
+            this.listView3.Name = "listView3";
+            this.listView3.ShowItemToolTips = true;
+            this.listView3.Size = new System.Drawing.Size(832, 350);
+            this.listView3.TabIndex = 2;
+            this.listView3.UseCompatibleStateImageBehavior = false;
+            this.listView3.View = System.Windows.Forms.View.Details;
+            this.listView3.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.listView3_ColumnClick);
+            this.listView3.SelectedIndexChanged += new System.EventHandler(this.listView3_SelectedIndexChanged);
+            // 
+            // Locked
+            // 
+            this.Locked.Text = "";
+            this.Locked.Width = 17;
+            // 
+            // Server
+            // 
+            this.Server.Text = "Server";
+            this.Server.Width = 285;
+            // 
+            // Host
+            // 
+            this.Host.Text = "Host";
+            this.Host.Width = 113;
+            // 
+            // Ping
+            // 
+            this.Ping.Text = "Ping";
+            this.Ping.Width = 48;
+            // 
+            // Map
+            // 
+            this.Map.Text = "Map";
+            this.Map.Width = 80;
+            // 
+            // Game
+            // 
+            this.Game.Text = "Game";
+            this.Game.Width = 78;
+            // 
+            // Variant
+            // 
+            this.Variant.Text = "Variant";
+            this.Variant.Width = 89;
+            // 
+            // Players
+            // 
+            this.Players.Text = "Players";
+            // 
+            // panel7
+            // 
+            this.panel7.BackColor = System.Drawing.SystemColors.Control;
+            this.panel7.Controls.Add(this.groupBox6);
+            this.panel7.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel7.Location = new System.Drawing.Point(0, 350);
+            this.panel7.Name = "panel7";
+            this.panel7.Size = new System.Drawing.Size(832, 235);
+            this.panel7.TabIndex = 3;
+            this.panel7.Visible = false;
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.BackColor = System.Drawing.SystemColors.Control;
+            this.groupBox6.Controls.Add(this.button10);
+            this.groupBox6.Controls.Add(this.richTextBox2);
+            this.groupBox6.Controls.Add(this.groupBox9);
+            this.groupBox6.Controls.Add(this.groupBox8);
+            this.groupBox6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox6.Location = new System.Drawing.Point(0, 0);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Padding = new System.Windows.Forms.Padding(3, 10, 3, 3);
+            this.groupBox6.Size = new System.Drawing.Size(832, 235);
+            this.groupBox6.TabIndex = 0;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "<ServerName>";
+            // 
+            // button10
+            // 
+            this.button10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button10.Location = new System.Drawing.Point(807, 0);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(25, 23);
+            this.button10.TabIndex = 1;
+            this.button10.Text = "X";
+            this.button10.UseVisualStyleBackColor = true;
+            this.button10.Click += new System.EventHandler(this.button10_Click);
+            // 
+            // richTextBox2
+            // 
+            this.richTextBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.richTextBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.richTextBox2.Location = new System.Drawing.Point(490, 23);
+            this.richTextBox2.Margin = new System.Windows.Forms.Padding(0);
+            this.richTextBox2.Name = "richTextBox2";
+            this.richTextBox2.ReadOnly = true;
+            this.richTextBox2.Size = new System.Drawing.Size(342, 212);
+            this.richTextBox2.TabIndex = 2;
+            this.richTextBox2.Text = "";
+            // 
+            // groupBox9
+            // 
+            this.groupBox9.Controls.Add(this.listView5);
+            this.groupBox9.Dock = System.Windows.Forms.DockStyle.Left;
+            this.groupBox9.Location = new System.Drawing.Point(245, 23);
+            this.groupBox9.Name = "groupBox9";
+            this.groupBox9.Size = new System.Drawing.Size(242, 209);
+            this.groupBox9.TabIndex = 1;
+            this.groupBox9.TabStop = false;
+            this.groupBox9.Text = "<Team><Score>";
+            // 
+            // listView5
+            // 
+            this.listView5.AllowDrop = true;
+            this.listView5.BackColor = System.Drawing.SystemColors.Window;
+            this.listView5.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.listView5.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader7,
+            this.columnHeader8,
+            this.columnHeader9,
+            this.columnHeader10,
+            this.columnHeader11});
+            this.listView5.Dock = System.Windows.Forms.DockStyle.Left;
+            this.listView5.FullRowSelect = true;
+            this.listView5.Location = new System.Drawing.Point(3, 16);
+            this.listView5.MultiSelect = false;
+            this.listView5.Name = "listView5";
+            this.listView5.ShowItemToolTips = true;
+            this.listView5.Size = new System.Drawing.Size(236, 190);
+            this.listView5.TabIndex = 3;
+            this.listView5.UseCompatibleStateImageBehavior = false;
+            this.listView5.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader7
+            // 
+            this.columnHeader7.Text = "Player";
+            this.columnHeader7.Width = 86;
+            // 
+            // columnHeader8
+            // 
+            this.columnHeader8.Text = "Score";
+            this.columnHeader8.Width = 40;
+            // 
+            // columnHeader9
+            // 
+            this.columnHeader9.Text = "K";
+            this.columnHeader9.Width = 30;
+            // 
+            // columnHeader10
+            // 
+            this.columnHeader10.Text = "D";
+            this.columnHeader10.Width = 30;
+            // 
+            // columnHeader11
+            // 
+            this.columnHeader11.Text = "A";
+            this.columnHeader11.Width = 27;
+            // 
+            // groupBox8
+            // 
+            this.groupBox8.Controls.Add(this.listView4);
+            this.groupBox8.Dock = System.Windows.Forms.DockStyle.Left;
+            this.groupBox8.Location = new System.Drawing.Point(3, 23);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(242, 209);
+            this.groupBox8.TabIndex = 0;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "<Team><Score>";
+            // 
+            // listView4
+            // 
+            this.listView4.AllowDrop = true;
+            this.listView4.BackColor = System.Drawing.SystemColors.Window;
+            this.listView4.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.listView4.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.Player,
+            this.Score,
+            this.K,
+            this.D,
+            this.A});
+            this.listView4.Dock = System.Windows.Forms.DockStyle.Left;
+            this.listView4.FullRowSelect = true;
+            this.listView4.Location = new System.Drawing.Point(3, 16);
+            this.listView4.MultiSelect = false;
+            this.listView4.Name = "listView4";
+            this.listView4.ShowItemToolTips = true;
+            this.listView4.Size = new System.Drawing.Size(236, 190);
+            this.listView4.TabIndex = 3;
+            this.listView4.UseCompatibleStateImageBehavior = false;
+            this.listView4.View = System.Windows.Forms.View.Details;
+            // 
+            // Player
+            // 
+            this.Player.Text = "Player";
+            this.Player.Width = 85;
+            // 
+            // Score
+            // 
+            this.Score.Text = "Score";
+            this.Score.Width = 40;
+            // 
+            // K
+            // 
+            this.K.Text = "K";
+            this.K.Width = 30;
+            // 
+            // D
+            // 
+            this.D.Text = "D";
+            this.D.Width = 30;
+            // 
+            // A
+            // 
+            this.A.Text = "A";
+            this.A.Width = 27;
+            // 
+            // panel3
+            // 
+            this.panel3.BackColor = System.Drawing.SystemColors.Control;
+            this.panel3.Controls.Add(this.richTextBox1);
+            this.panel3.Controls.Add(this.groupBox5);
+            this.panel3.Controls.Add(this.groupBox4);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel3.Location = new System.Drawing.Point(832, 0);
+            this.panel3.Margin = new System.Windows.Forms.Padding(0);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(158, 585);
+            this.panel3.TabIndex = 3;
+            // 
+            // richTextBox1
+            // 
+            this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.richTextBox1.Location = new System.Drawing.Point(3, 3);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.ReadOnly = true;
+            this.richTextBox1.Size = new System.Drawing.Size(152, 318);
+            this.richTextBox1.TabIndex = 15;
+            this.richTextBox1.Text = "If a compatible server requires any mods, they will be listed here.";
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupBox5.Controls.Add(this.button9);
+            this.groupBox5.Location = new System.Drawing.Point(3, 430);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(152, 51);
+            this.groupBox5.TabIndex = 16;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Mods";
+            this.groupBox5.Visible = false;
+            // 
+            // button9
+            // 
+            this.button9.Location = new System.Drawing.Point(6, 15);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(140, 30);
+            this.button9.TabIndex = 0;
+            this.button9.Text = "Mod-Sync\r\n";
+            this.button9.UseVisualStyleBackColor = true;
+            this.button9.Visible = false;
+            this.button9.Click += new System.EventHandler(this.button9_Click);
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupBox4.Controls.Add(this.button11);
+            this.groupBox4.Controls.Add(this.button8);
+            this.groupBox4.Location = new System.Drawing.Point(3, 487);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(152, 95);
+            this.groupBox4.TabIndex = 14;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Game";
+            // 
+            // button11
+            // 
+            this.button11.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.button11.Location = new System.Drawing.Point(6, 15);
+            this.button11.Name = "button11";
+            this.button11.Size = new System.Drawing.Size(140, 30);
+            this.button11.TabIndex = 14;
+            this.button11.Text = "Quick Match";
+            this.button11.UseVisualStyleBackColor = true;
+            this.button11.Click += new System.EventHandler(this.button11_Click);
+            // 
+            // button8
+            // 
+            this.button8.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.button8.Location = new System.Drawing.Point(6, 51);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(140, 30);
+            this.button8.TabIndex = 13;
+            this.button8.Text = "Connect\r\n";
+            this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
+            // 
+            // percentageLabel
+            // 
+            this.percentageLabel.Name = "percentageLabel";
+            this.percentageLabel.Size = new System.Drawing.Size(0, 17);
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.refreshMods,
+            this.modNumberLabel,
+            this.toolStripStatusLabel1,
+            this.percentageLabel});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 611);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.ShowItemToolTips = true;
+            this.statusStrip1.Size = new System.Drawing.Size(998, 22);
+            this.statusStrip1.TabIndex = 2;
+            // 
+            // refreshMods
+            // 
+            this.refreshMods.AutoToolTip = false;
+            this.refreshMods.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.refreshMods.DropDownButtonWidth = 0;
+            this.refreshMods.Image = global::FoundationMM.Properties.Resources.ico_refresh;
+            this.refreshMods.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.refreshMods.Name = "refreshMods";
+            this.refreshMods.Size = new System.Drawing.Size(21, 20);
+            this.refreshMods.Click += new System.EventHandler(this.refreshModsClick);
+            // 
+            // modNumberLabel
+            // 
+            this.modNumberLabel.Name = "modNumberLabel";
+            this.modNumberLabel.Size = new System.Drawing.Size(95, 17);
+            this.modNumberLabel.Text = "0 mods available";
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(658, 17);
+            this.toolStripStatusLabel1.Spring = true;
             // 
             // Window
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(789, 511);
+            this.ClientSize = new System.Drawing.Size(998, 633);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.statusStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -758,8 +1128,6 @@
             this.groupBox3.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
             this.outputPanel.ResumeLayout(false);
             this.outputPanel.PerformLayout();
             this.tabControl1.ResumeLayout(false);
@@ -777,42 +1145,38 @@
             this.panel5.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.groupBox7.ResumeLayout(false);
+            this.tabPage3.ResumeLayout(false);
+            this.panel7.ResumeLayout(false);
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox9.ResumeLayout(false);
+            this.groupBox8.ResumeLayout(false);
+            this.panel3.ResumeLayout(false);
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox4.ResumeLayout(false);
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.ListView listView1;
-        private System.Windows.Forms.ColumnHeader header_Name;
-        private System.Windows.Forms.ColumnHeader header_Author;
-        private System.Windows.Forms.ColumnHeader header_Description;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button openMods;
-        private System.Windows.Forms.ToolStripStatusLabel modNumberLabel;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.ColumnHeader header_Location;
-        private System.Windows.Forms.ToolStripStatusLabel percentageLabel;
         private System.Windows.Forms.Button openGameRoot;
-        private System.Windows.Forms.ColumnHeader header_Warnings;
-        private System.Windows.Forms.ColumnHeader header_Version;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.GroupBox devModeGroupBox;
         private System.Windows.Forms.Button toggleFileRestoration;
         private System.Windows.Forms.Button toggleCmdWindows;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Panel outputPanel;
-        private System.Windows.Forms.ToolStripSplitButton refreshMods;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
@@ -846,6 +1210,53 @@
         private System.Windows.Forms.TextBox infobar2Desc;
         private System.Windows.Forms.Panel infobar2Image;
         private System.Windows.Forms.ColumnHeader columnDL_downloads;
+        private System.Windows.Forms.ToolStripStatusLabel percentageLabel;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripSplitButton refreshMods;
+        private System.Windows.Forms.ToolStripStatusLabel modNumberLabel;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.ColumnHeader header_Name;
+        private System.Windows.Forms.ColumnHeader header_Author;
+        private System.Windows.Forms.ColumnHeader header_Version;
+        private System.Windows.Forms.ColumnHeader header_Description;
+        private System.Windows.Forms.ColumnHeader header_Warnings;
+        private System.Windows.Forms.ColumnHeader header_Location;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.ListView listView3;
+        private System.Windows.Forms.ColumnHeader Locked;
+        private System.Windows.Forms.ColumnHeader Server;
+        private System.Windows.Forms.ColumnHeader Host;
+        private System.Windows.Forms.ColumnHeader Ping;
+        private System.Windows.Forms.ColumnHeader Map;
+        private System.Windows.Forms.ColumnHeader Game;
+        private System.Windows.Forms.ColumnHeader Variant;
+        private System.Windows.Forms.ColumnHeader Players;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.Button button9;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.Button button11;
+        private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.Panel panel7;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.Button button10;
+        private System.Windows.Forms.RichTextBox richTextBox2;
+        private System.Windows.Forms.GroupBox groupBox9;
+        private System.Windows.Forms.ListView listView5;
+        private System.Windows.Forms.ColumnHeader columnHeader7;
+        private System.Windows.Forms.ColumnHeader columnHeader8;
+        private System.Windows.Forms.ColumnHeader columnHeader9;
+        private System.Windows.Forms.ColumnHeader columnHeader10;
+        private System.Windows.Forms.ColumnHeader columnHeader11;
+        private System.Windows.Forms.GroupBox groupBox8;
+        private System.Windows.Forms.ListView listView4;
+        private System.Windows.Forms.ColumnHeader Player;
+        private System.Windows.Forms.ColumnHeader Score;
+        private System.Windows.Forms.ColumnHeader K;
+        private System.Windows.Forms.ColumnHeader D;
+        private System.Windows.Forms.ColumnHeader A;
     }
 }
-

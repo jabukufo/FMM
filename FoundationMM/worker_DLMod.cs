@@ -40,6 +40,7 @@ namespace FoundationMM
                 string locLocation = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "mods", "tagmods", item.SubItems[6].Text.Replace("/", "\\"));
                 Debug.WriteLine(locLocation);
                 dlModWorker.RunWorkerAsync(new string[] { remLocation, locLocation });
+
                 do {
                     Thread.Sleep(100);
                 } while (dlModWorker.IsBusy);

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ini;
+using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
@@ -9,6 +10,8 @@ namespace FoundationMM
 {
     public partial class Window : Form
     {
+        // TODO: Comment all the stuff related to "fmmRequired.dat" in this file.
+
         bool showInstallers = false;
 
         private void modInstallWorker_DoWork(object sender, DoWorkEventArgs e)
@@ -25,12 +28,25 @@ namespace FoundationMM
             fmmdatWiper.SetLength(0);
             fmmdatWiper.Close();
 
+            string fmmdatRequired = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "fmmRequired.dat");
+            FileStream fmmdatRequiredWiper = File.Open(fmmdat, FileMode.OpenOrCreate);
+            fmmdatRequiredWiper.SetLength(0);
+            fmmdatRequiredWiper.Close();
+
             StreamWriter fmmdatWriter = new StreamWriter(fmmdat);
+            StreamWriter fmmdatRequiredWriter = new StreamWriter(fmmdatRequired);
             foreach (ListViewItem item in listView1.CheckedItems.Cast<ListViewItem>().AsEnumerable().Reverse())
             {
                 fmmdatWriter.WriteLine(item.SubItems[0].Text);
+
+                IniFile ini = new IniFile(Path.Combine(Directory.GetCurrentDirectory(), "mods", item.SubItems[5].Text.Replace(".fm", ".ini")));
+                if (ini.IniReadValue("FMMInfo", "Required").ToLower() == "true")
+                {
+                    fmmdatRequiredWriter.WriteLine(item.SubItems[5].Text);
+                }
             }
             fmmdatWriter.Close();
+            fmmdatRequiredWriter.Close();
 
             worker.ReportProgress(i);
 
@@ -58,7 +74,7 @@ namespace FoundationMM
                     startInfo.FileName = batFile;
                     startInfo.WorkingDirectory = System.IO.Directory.GetCurrentDirectory();
 
-                    textBox1.Invoke(new appendNewOutputCallback(this.appendNewOutput), new object[] { "[" + item.SubItems[0].Text + "]" });
+                    textBox1.Invoke(new appendNewOutputCallback(this.appendNewOutput), new object[] { textBox1, "[" + item.SubItems[0].Text + "]" });
 
                     // start installer
                     using (Process exeProcess = Process.Start(startInfo))
@@ -72,7 +88,7 @@ namespace FoundationMM
                                 if (standard_output.StartsWith("FMM_OUTPUT "))
                                 {
                                     standard_output = standard_output.Trim().Replace("FMM_OUTPUT ", "");
-                                    textBox1.Invoke(new appendNewOutputCallback(this.appendNewOutput), new object[] { standard_output });
+                                    textBox1.Invoke(new appendNewOutputCallback(this.appendNewOutput), new object[] { textBox1, standard_output });
                                 }
                                 else if (standard_output.StartsWith("FMM_ALERT "))
                                 {

@@ -56,6 +56,7 @@ namespace FoundationMM
                     try { modWarnings = ini.IniReadValue("FMMInfo", "Warnings"); }
                     catch { modWarnings = ""; }
                     string modDesc = ini.IniReadValue("FMMInfo", "Desc");
+                    //string required = ini.IniReadValue("FMMInfo", "Required");
 
                     string modLocation = fmfile.Replace(Path.Combine(Directory.GetCurrentDirectory(), "mods\\"), "");
                     listView1.Items.Add(new ListViewItem(new[] { modName, modAuthor, modVersion, modDesc, modWarnings, modLocation }));
@@ -119,14 +120,16 @@ namespace FoundationMM
                             downloadsDictionary.Add((string)o.Property("name").Value, (string)o.Property("downloads").Value);
                         }
                     }
-                } catch { }
+                }
+                catch { }
             }
-            
+
+
             if (File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "fmm-svn", "links.txt")))
+            {
+                IEnumerable<string> lines = File.ReadLines(Path.Combine(Directory.GetCurrentDirectory(), "fmm-svn", "links.txt"));
+                foreach (string modini in lines)
                 {
-                    IEnumerable<string> lines = File.ReadLines(Path.Combine(Directory.GetCurrentDirectory(), "fmm-svn", "links.txt"));
-                    foreach (string modini in lines)
-                    {
                     if (modini != "")
                     {
                         Uri moduri = new Uri(modini);
@@ -146,11 +149,17 @@ namespace FoundationMM
                             try { modWarnings = ini.IniReadValue("FMMInfo", "Warnings"); }
                             catch { modWarnings = ""; }
                             string modDesc = ini.IniReadValue("FMMInfo", "Desc");
+                            //string required = ini.IniReadValue("FMMInfo", "Required");
                             string modUsers = "";
                             downloadsDictionary.TryGetValue(modName.ToLower(), out modUsers);
+
                             string modLocation = modini.Replace("https://raw.githubusercontent.com/Clef-0/FMM-Mods/master/", "").Replace(".ini", ".fm");
 
-                            listView2.Invoke((MethodInvoker)delegate { listView2.Items.Add(new ListViewItem(new[] { modName, modAuthor, modVersion, modDesc, modWarnings, modUsers, modLocation })); });
+                            try // Added this try-catch here because when closing the app while the downloadable-mods list is being populated, it exceptions.
+                            {
+                                listView2.Invoke((MethodInvoker)delegate { listView2.Items.Add(new ListViewItem(new[] { modName, modAuthor, modVersion, modDesc, modWarnings, modUsers, modLocation })); });
+                            }
+                            catch { }
 
                             if (enabledTab == 1)
                             {

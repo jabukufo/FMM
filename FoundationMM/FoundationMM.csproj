@@ -62,12 +62,12 @@
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="SharpSvn, Version=1.8016.3866.130, Culture=neutral, PublicKeyToken=d729672594885a28, processorArchitecture=x86">
-      <HintPath>..\packages\SharpSvn.1.8-x86.1.8016.3866.130\lib\net40\SharpSvn.dll</HintPath>
+    <Reference Include="SharpSvn, Version=1.8016.3900.133, Culture=neutral, PublicKeyToken=d729672594885a28, processorArchitecture=x86">
+      <HintPath>..\packages\SharpSvn.1.8-x86.1.8016.3900.133\lib\net40\SharpSvn.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="SharpSvn.UI, Version=1.8016.3866.130, Culture=neutral, PublicKeyToken=33789aa53ca44aa9, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharpSvn.1.8-x86.1.8016.3866.130\lib\net40\SharpSvn.UI.dll</HintPath>
+    <Reference Include="SharpSvn.UI, Version=1.8016.3900.133, Culture=neutral, PublicKeyToken=33789aa53ca44aa9, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpSvn.1.8-x86.1.8016.3900.133\lib\net40\SharpSvn.UI.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -98,10 +98,17 @@
     <Compile Include="buttons_Mods.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="class_ListViewItemNumberComparer.cs" />
     <Compile Include="functions_FlashTaskbar.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="functions_Infobar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="functions_ConnectToServer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="functions_UpdateServerList.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="functions_LoadInstallers.cs">
@@ -120,6 +127,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="worker_DLMod.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="worker_ModSync.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="worker_UpdateServerList.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="worker_UpdateDLFiles.cs">
@@ -151,6 +164,7 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

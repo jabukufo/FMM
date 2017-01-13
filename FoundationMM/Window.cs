@@ -8,11 +8,27 @@ using System.Linq;
 
 using Ini;
 using System.Drawing;
+using System.Net;
+
+using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 
 namespace FoundationMM
 {
     public partial class Window : Form
     {
+        /// <summary>
+        /// These are just here to store this information so that they are accessible from various parts of the program.
+        /// </summary>
+        // Used to store the "HostServer" object that's stored in the last-selected- ListViewItem's .Tag
+        public static HostServer globalHost = new HostServer();
+        // Used to store the last entered server-password (used when trying to connect to the globalHost through DewRcon).
+        public static string globalPassword = string.Empty;
+        // Used to store mods any mods that the last selected server requires which the user does not have installed.
+        public static List<string> globalModsToSync = new List<string> { };
+        // Used to store the USERS eldewrito version.
+        public static string globalEDVersion = string.Empty;
+
         string[] files = {
                      @"fonts\font_package.bin",
                      "audio.dat",
@@ -52,7 +68,16 @@ namespace FoundationMM
         BackgroundWorker dlModWorkerStarter = new BackgroundWorker();
         BackgroundWorker dlModWorker = new BackgroundWorker();
 
+        // Background worker used for populating/repopulating the Server-List
+        BackgroundWorker serverBrowserWorker = new BackgroundWorker();
+        // Background worker used for Mod-Sync (which downloads/installs mods in the "globalModsToSync" List.)
+        BackgroundWorker modSyncWorker = new BackgroundWorker();
+
         bool refreshinprog = false;
+
+        // True == the server list is being updated; false == it is not being updated.
+        // This is needed so that we can check it before starting the background worker.
+        bool serverRefreshProg = false;
 
         public static void SetDoubleBuffered(System.Windows.Forms.Control c)
         {
@@ -148,6 +173,18 @@ namespace FoundationMM
             dlFilesWorker.DoWork += new DoWorkEventHandler(dlFilesWorker_DoWork);
             dlFilesWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(dlFilesWorker_RunWorkerCompleted);
 
+            // serverList population background worker stufffff.
+            serverBrowserWorker.WorkerSupportsCancellation = true;
+            serverBrowserWorker.WorkerReportsProgress = true;
+            serverBrowserWorker.DoWork += new DoWorkEventHandler(serverBrowserWorker_DoWork);
+            serverBrowserWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(serverBrowserWorker_RunWorkerCompleted);
+
+            // Mod-Sync background worker stufffff.
+            modSyncWorker.WorkerSupportsCancellation = true;
+            modSyncWorker.WorkerReportsProgress = true;
+            modSyncWorker.DoWork += new DoWorkEventHandler(modSyncWorker_DoWork);
+            modSyncWorker.ProgressChanged += new ProgressChangedEventHandler(modSyncWorker_ProgressChanged);
+            modSyncWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(modSyncWorker_RunWorkerCompleted);
 
             DirectoryInfo dir0 = Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "mods", "tagmods"));
             string identifier = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "fmm.ini");
@@ -296,6 +333,16 @@ namespace FoundationMM
             
             if (ini2.IniReadValue("FMMPrefs", "OfflineMode").ToLower() != "true")
             {
+                // Begins updating the server-list when the app is launched.
+                Log("Updating server list...");
+
+                // True == the server list is being updated; false == it is not being updated.
+                // This is needed so that we can check it before starting the background worker.
+                serverRefreshProg = true;
+
+                // Begin populating the server-list.
+                serverBrowserWorker.RunWorkerAsync(new string[] { Path.Combine(System.IO.Directory.GetCurrentDirectory(), "mods", "tagmods") });
+
                 Log("Downloading mod list...");
                 refreshinprog = true;
                 dlFilesWorker.RunWorkerAsync(new string[] { Path.Combine(System.IO.Directory.GetCurrentDirectory(), "mods", "tagmods") });
@@ -356,32 +403,61 @@ namespace FoundationMM
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
             enabledTab = tabControl1.SelectedIndex;
-            int modCount = 0;
+
+            // Used to store the amount of items the ListView of the current tab contains.
+            int itemCount = 0;
+
+            // Used to determine whether the modNumberLabel.Text should say "mods available" or "servers" available,
+            // depending on the current tab.
+            bool server = false;
             if (enabledTab == 0)
             {
                 refreshMods.Visible = true;
                 modNumberLabel.Visible = true;
-                modCount = listView1.Items.Count;
+                itemCount = listView1.Items.Count;
+                // This IS NOT the server-browser tab, so this is set to FALSE.
+                server = false;
             }
             else if (enabledTab == 1)
             {
                 refreshMods.Visible = true;
                 modNumberLabel.Visible = true;
-                modCount = listView2.Items.Count;
+                itemCount = listView2.Items.Count;
+                // This IS NOT the server-browser tab, so this is set to FALSE.
+                server = false;
             }
             else if (enabledTab == 2)
             {
-                refreshMods.Visible = false;
-                modNumberLabel.Visible = false;
+                refreshMods.Visible = true;
+                modNumberLabel.Visible = true;
+                itemCount = listView3.Items.Count;
+                // This IS the server-browser tab, so this is set to TRUE.
+                server = true;
             }
 
-            if (modCount == 1)
+            // If there is ONLY one item in the list, and the tab IS NOT the server-browser tab
+            // set the text to "1 mod available"
+            if (itemCount == 1 && server == false)
             {
                 modNumberLabel.Text = "1 " + lang_ModAvailable;
             }
-            else
+            // If there is MORE THAN one item in the list, and the tab IS NOT the server-browser tab
+            // set the text to "'X' mods available"
+            else if (itemCount > 1 && server == false)
             {
-                modNumberLabel.Text = modCount + " " + lang_ModsAvailable;
+                modNumberLabel.Text = itemCount + " " + lang_ModsAvailable;
+            }
+            // If there is ONLY one item in the list, and the tab IS the server-browser tab
+            // set the text to "1 server available"
+            else if (itemCount == 1 && server == true)
+            {
+                modNumberLabel.Text = "1 " + "server available";
+            }
+            // If there is MORE THAN one item in the list, and the tab IS the server-browser tab
+            // set the text to "'X' servers available"
+            else if (itemCount > 1 && server == true)
+            {
+                modNumberLabel.Text = itemCount + " servers available";
             }
 
             infobar.Visible = false;
@@ -470,6 +546,7 @@ namespace FoundationMM
 
         private void listView2_ColumnClick(object sender, ColumnClickEventArgs e)
         {
+            
             if (e.Column != sortColumn2)
             {
                 sortColumn2 = e.Column;
@@ -492,9 +569,315 @@ namespace FoundationMM
             checkFMMInstallerOrder();
         }
 
-        private void outputPanel_Paint(object sender, PaintEventArgs e)
-        {
 
+        private int sortColumn3 = -1;
+        /// <summary>
+        /// Sorting stuff for server list... Uses special sort method for the "Ping" and "Player"
+        /// columns since they are "numbers" and don't get sorted properly through standard
+        /// string sorting.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void listView3_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            if (e.Column != sortColumn3)
+            {
+                sortColumn3 = e.Column;
+                listView3.Sorting = SortOrder.Ascending;
+            }
+            else
+            {
+                if (listView3.Sorting == SortOrder.Ascending)
+                {
+                    listView3.Sorting = SortOrder.Descending;
+                }
+                else
+                {
+                    listView3.Sorting = SortOrder.Ascending;
+                }
+            }
+
+            listView3.Sort();
+
+            if (e.Column == 3 || e.Column == 7) // If the "Ping" or "Players" column is being sorted, we need to do special sorting logic...
+                listView3.ListViewItemSorter = new ListViewItemNumberComparer(e.Column, listView3.Sorting);
+            else
+                listView3.ListViewItemSorter = new ListViewItemComparer(e.Column, listView3.Sorting);
+
+            checkFMMInstallerOrder();
+        }
+
+        /// <summary>
+        /// Checks if the server requires any mods that the user does not have installed.
+        /// If there are any required mods, they get displayed in richTextBox1 on the
+        /// right.
+        /// Also runs the ServerInfo() method which updates the ServerInfo panel that
+        /// is shown below the ServerList.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void listView3_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Clears the globalModsToSync list so that users don't end up having to sync mods from one server before joining another.
+            globalModsToSync.Clear();
+            // Enable the connect button... It will be disabled again if any mods-to-sync get added to globalModsToSync.
+            button8.Enabled = true;
+            // Hide the "Mod-Sync" groupbox and button... It will be unhidden if any mods-to-sync get added to globalModsToSync.
+            groupBox5.Hide();
+            button9.Hide();
+
+            // Reads the list of mods that the user has installed that were marked "Required=True" in the .ini file.
+            string requiredMods = string.Empty;
+            if (File.Exists("fmmRequired.dat"))
+                requiredMods = File.ReadAllText("fmmRequired.dat");
+
+            // Sets "globalHost" to the "HostServer" object that is stored in the selected ListViewItem.Tag.
+            if (listView3.SelectedItems.Count != 0)
+                globalHost = (HostServer)listView3.SelectedItems[0].Tag;
+
+            // Sets the USER's ED version so that it can be compared with the server's ED version...
+            if (File.Exists(Environment.CurrentDirectory + "\\mtndew.dll"))
+            {
+                var _eldoritoVersion = FileVersionInfo.GetVersionInfo(Environment.CurrentDirectory + "\\mtndew.dll");
+                globalEDVersion = _eldoritoVersion.ProductVersion;
+            }
+
+            // Updates the "Server-Info" panel to show additional information on the selected item.
+            ServerInfo();
+
+            // Checks if USER and SERVER ED versions match, if not, disable the connect button for this server, and "return"
+            if (File.Exists(Environment.CurrentDirectory + "\\mtndew.dll"))
+            {
+                var _eldoritoVersion = FileVersionInfo.GetVersionInfo(Environment.CurrentDirectory + "\\mtndew.dll");
+                globalEDVersion = _eldoritoVersion.ProductVersion;
+            }
+            if (globalHost.eldewritoVersion != globalEDVersion)
+            {
+                // Disables the connect button so users can't connect to a server running a different ED version.
+                button8.Enabled = false;
+                //button8.Enabled = true; NOTE: for debugging purposes ONLY, uncommenting this line will keep the connect button enabled
+                // to allow attempting to connect servers running a differed ED version... Again, for debugging purposes ONLY. 
+                richTextBox1.Text = $"Host running different version!\n\nTheirs: {globalHost.eldewritoVersion}\nYours: {globalEDVersion}";
+                return;
+            }
+
+
+            // If the globalHost's "mods" property is not null, the server has mods that are required to be installed before connecting...
+            if (globalHost.mods != null)
+            {
+                // Check each mod that the globalHost requires to have installed...
+                foreach (var mod in globalHost.mods)
+                {
+                    // If the user doesn't have the mod listed inside "fmmRequired.dat", it needs to be installed.
+                    // (it should get added to "fmmRequired.dat" when a mod marked "Require=True" is installed.)
+                    if (!requiredMods.Contains(mod))
+                    {
+                        //TODO: if the mod is downloaded but not installed, it shouldn't download it,
+                        //but should still install it. (no reason to download if it already exists)
+                        // add this into download portion of ModSync:
+                        // if (!File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "mods", mod)))
+
+                        // Disables the "Connect" button - Don't allow connecting to the server if the server requires mods that have not
+                        // been installed yet.
+                        button8.Enabled = false;
+
+                        // Downloads and Installs any mods that it needs to.
+                        globalModsToSync.Add(mod);
+                    }
+                }
+            }
+
+            // Clear the RichTextBox to the right of the server list - this will be used to display mods that require syncing.
+            richTextBox1.Text = string.Empty;
+
+            // If the globalModsToSync List is not empty this means there are mods that need to be synced.
+            if (globalModsToSync.Count() != 0)
+            {
+                // Show the "Mod-Sync" groupbox and button.
+                groupBox5.Show();
+                button9.Show();
+
+                // Add each mod in the globalModsToSync List to the RichTextBox to the right of the server list.
+                foreach (var mod in globalModsToSync)
+                    richTextBox1.Text += mod + "\n";
+
+                // Finally, after all mods in the globalModsToSync List are added to the RichTextBox to the right of the server list,
+                // add text to the end of that in the RichTextBox to the right of the server list informing the user to click
+                // the "Mod-Sync" button to Download/Install the required mods.
+                richTextBox1.Text += "\nClick the 'Mod-Sync' button below to download and install the above mods.";
+            }
+        }
+
+        /// <summary>
+        /// "Connect" button.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void button8_Click(object sender, EventArgs e)
+        {
+            // If the host requires a password, a password dialog is shown, and the entered-password is stored in globalPassword.
+            // TODO: if the above TO-DO is true (it was... removed.), this can probably be moved into the "ConnectToServer" method.
+            //if (globalHost.passworded == "🔒")
+            //    globalPassword = PasswordDialog();
+
+            ConnectToServer();
+        }
+
+        /// <summary>
+        /// "Mod-Sync" button.
+        /// Kills all running ED processes then begins Mod-Sync
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void button9_Click(object sender, EventArgs e)
+        {
+            // Disables all the controls so they can't be messed with while Mod-Syncing is happening.
+            tabControl1.Enabled = false;
+
+            //Close all detected ED processes so that Mods can be installed properly.
+            try
+            {
+                foreach (Process EDProcess in Process.GetProcessesByName("eldorado"))
+                {
+                    EDProcess.Kill();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+
+            // True == the server list is being updated; false == it is not being updated.
+            // This is needed so that we can check it before starting the background worker.
+            serverRefreshProg = true;
+
+            // Downloads and installs mods from the "globalModsToSync" List.
+            modSyncWorker.RunWorkerAsync(new string[] { Path.Combine(System.IO.Directory.GetCurrentDirectory(), "mods", "tagmods") });
+        }
+
+        /// <summary>
+        /// "Close Button" for the server-info panel.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void button10_Click(object sender, EventArgs e)
+        {
+            // Clear selected items so that the panel doesn't become visible again if
+            // the user sorts a column... Sorting a colum changes the selected index for the selected
+            // ListViewItem and calls "listView3_SelectedIndexChanged"
+            listView3.SelectedItems.Clear();
+            // Hide the server-info panel.
+            panel7.Visible = false;
+        }
+
+        /// <summary>
+        /// "Quick Match" button. Selects the server with the lowest ping, that requires
+        /// no mods, that has more than "0" players, and is that's status is not "inLobby".
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void button11_Click(object sender, EventArgs e)
+        {
+            // Clear selected items so if the user selects the same item after clicking "QuickMatch"
+            // the "richTextBox1" to the right of the Server-List gets updated properly.
+            // (this is because otherwise "listView3_SelectedIndexChanged" doesn't get called when clicking that item).
+            listView3.SelectedItems.Clear();
+
+            HostServer bestServer = new HostServer();
+
+            // Set the USER's ED version based off of their mtndew.dll, if it gets located...
+            if (File.Exists(Environment.CurrentDirectory + "\\mtndew.dll"))
+            {
+                var _eldoritoVersion = FileVersionInfo.GetVersionInfo(Environment.CurrentDirectory + "\\mtndew.dll");
+                globalEDVersion = _eldoritoVersion.ProductVersion;
+            }
+
+            foreach (ListViewItem server in listView3.Items)
+            {
+                // Storing the current "server" in this object instance so it doesn't have to be parsed multiple times.
+                HostServer evaluateServer = (HostServer)server.Tag;
+
+                // Skip servers that are full, passworded, non-matching ELDEWRITO version, or non-matching GAME version.
+                if (evaluateServer.numPlayers == evaluateServer.maxPlayers 
+                    || evaluateServer.passworded == "🔒"
+                    || evaluateServer.eldewritoVersion != globalEDVersion) // NOTE: comment this line to disable version checking for QuickMatch
+                    continue;
+
+                // Reads the list of mods that the user has installed that were marked "Required=True" in the .ini file.
+                string requiredMods = string.Empty;
+                if (File.Exists("fmmRequired.dat"))
+                    requiredMods = File.ReadAllText("fmmRequired.dat");
+
+                bool skip = false;
+                if (evaluateServer.mods.Count != 0 && requiredMods != string.Empty)
+                {
+                    // Check each mod that the globalHost requires to have installed...
+                    foreach (var mod in evaluateServer.mods)
+                    {
+                        // If the user doesn't have the mod listed inside "fmmRequired.dat", it needs to be installed.
+                        // (it should get added to "fmmRequired.dat" when a mod marked "Require=True" is installed.)
+                        if (!requiredMods.Contains(mod))
+                        {
+                            skip = true;
+                            break;
+                        }
+                    }
+                    if (skip) continue;
+                }
+
+                // Tries to choose a server with players, with the best ping, that is in a game.
+                // In that priority order. Could probably be refactored to be more readable.
+                #region "Best Server" logic...
+                if (evaluateServer.numPlayers > 0)
+                {
+                    if (int.Parse(evaluateServer.ping) < int.Parse(bestServer.ping))
+                    {
+                        if (bestServer.status.ToLower() == "inlobby")
+                        {
+                            if (evaluateServer.status.ToLower() != "inlobby")
+                            {
+                                bestServer = evaluateServer;
+                            }
+                        }
+                        else
+                        {
+                            bestServer = evaluateServer;
+                        }
+                    }
+                }
+                else if (bestServer.numPlayers == 0)
+                {
+                    if (int.Parse(evaluateServer.ping) < int.Parse(bestServer.ping))
+                    {
+                        if (bestServer.status.ToLower() == "inlobby")
+                        {
+                            if (evaluateServer.status.ToLower() != "inlobby")
+                            {
+                                bestServer = evaluateServer;
+                            }
+                        }
+                        else
+                        {
+                            bestServer = evaluateServer;
+                        }
+                    }
+                }
+                #endregion
+            }
+
+            // Set globalHost to the server that was determined to be "best", and then connect to it (unless no possible matches
+            // were found which could be due to ED version mismatches, or no server's that aren't "full".) Notify user if
+            // no servers are available.
+            if (bestServer.ipAddress != "")
+            {
+                globalHost = bestServer;
+                ConnectToServer();
+            }
+            else
+                richTextBox1.Text = "No server's are available for QuickMatch! This could be because no servers which are " +
+                    "online are running the same ElDewrito version as you, the servers are 'passworded', or because " +
+                    "the servers are full.";
         }
     }
 }
