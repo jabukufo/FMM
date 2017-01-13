@@ -1120,7 +1120,7 @@
             this.Controls.Add(this.statusStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Window";
-            this.Text = "Foundation Mod Manager v1.20 Infinity (for Halo Online)";
+            this.Text = "Foundation Mod Manager v1.30 Juggernaut (for Halo Online)";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Window_FormClosing);
             this.Load += new System.EventHandler(this.Window_Load);
             this.panel1.ResumeLayout(false);
