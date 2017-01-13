@@ -441,9 +441,9 @@ namespace FoundationMM
             {
                 modNumberLabel.Text = "1 " + lang_ModAvailable;
             }
-            // If there is MORE THAN one item in the list, and the tab IS NOT the server-browser tab
+            // If there is NOT ONLY one item in the list, and the tab IS NOT the server-browser tab
             // set the text to "'X' mods available"
-            else if (itemCount > 1 && server == false)
+            else if (itemCount != 1 && server == false)
             {
                 modNumberLabel.Text = itemCount + " " + lang_ModsAvailable;
             }
@@ -453,9 +453,9 @@ namespace FoundationMM
             {
                 modNumberLabel.Text = "1 " + "server available";
             }
-            // If there is MORE THAN one item in the list, and the tab IS the server-browser tab
+            // If there is NOT ONLY one item in the list, and the tab IS the server-browser tab
             // set the text to "'X' servers available"
-            else if (itemCount > 1 && server == true)
+            else if (itemCount != 1 && server == true)
             {
                 modNumberLabel.Text = itemCount + " servers available";
             }

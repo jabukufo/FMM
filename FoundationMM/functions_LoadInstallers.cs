@@ -157,7 +157,37 @@ namespace FoundationMM
 
                             try // Added this try-catch here because when closing the app while the downloadable-mods list is being populated, it exceptions.
                             {
-                                listView2.Invoke((MethodInvoker)delegate { listView2.Items.Add(new ListViewItem(new[] { modName, modAuthor, modVersion, modDesc, modWarnings, modUsers, modLocation })); });
+                                ListViewItem modItem = new ListViewItem(new[] { modName, modAuthor, modVersion, modDesc, modWarnings, modUsers, modLocation });
+                                listView2.Invoke((MethodInvoker)delegate { listView2.Items.Add(modItem); });
+
+                                // update checking
+                                string fileToTest = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "mods/tagmods", modLocation.Replace(".fm", ".ini")));
+                                if (File.Exists(fileToTest))
+                                {
+                                    IniFile file = new IniFile(fileToTest);
+                                    if (file.IniReadValue("FMMInfo", "Version") != modVersion || file.IniReadValue("FMMInfo", "EDVersion") != ini.IniReadValue("FMMInfo", "EDVersion"))
+                                    {
+                                        listView2.Invoke((MethodInvoker)delegate
+                                        {
+                                            try
+                                            {
+                                                listView2.FindItemWithText(file.IniReadValue("FMMInfo", "Name")).BackColor = System.Drawing.Color.FromArgb(0, 255, 240, 200);
+                                            }
+                                            catch { }
+                                        });
+                                    }
+                                    else
+                                    {
+                                        listView2.Invoke((MethodInvoker)delegate
+                                        {
+                                            try
+                                            {
+                                                listView2.FindItemWithText(file.IniReadValue("FMMInfo", "Name")).BackColor = System.Drawing.Color.FromArgb(0, 225, 255, 225);
+                                            }
+                                            catch { }
+                                        });
+                                    }
+                                }
                             }
                             catch { }
 

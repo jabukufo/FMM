@@ -77,6 +77,7 @@
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnDL_downloads = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.infobar2 = new System.Windows.Forms.TableLayoutPanel();
             this.infobar2Icon = new System.Windows.Forms.Panel();
@@ -90,7 +91,6 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.button16 = new System.Windows.Forms.Button();
-            this.columnDL_downloads = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.listView3 = new System.Windows.Forms.ListView();
             this.Locked = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -131,6 +131,7 @@
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             this.outputPanel.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -151,8 +152,63 @@
             this.panel3.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox4.SuspendLayout();
-            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // listView1
+            // 
+            this.listView1.AllowDrop = true;
+            this.listView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.listView1.CheckBoxes = true;
+            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.header_Name,
+            this.header_Author,
+            this.header_Version,
+            this.header_Description,
+            this.header_Warnings,
+            this.header_Location});
+            this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listView1.FullRowSelect = true;
+            this.listView1.Location = new System.Drawing.Point(0, 0);
+            this.listView1.MultiSelect = false;
+            this.listView1.Name = "listView1";
+            this.listView1.ShowItemToolTips = true;
+            this.listView1.Size = new System.Drawing.Size(832, 513);
+            this.listView1.TabIndex = 1;
+            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.listView1.View = System.Windows.Forms.View.Details;
+            this.listView1.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.listView1_ColumnClick);
+            this.listView1.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.listView1_ItemCheck);
+            this.listView1.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
+            this.listView1.Click += new System.EventHandler(this.listView1_SelectedIndexChanged);
+            // 
+            // header_Name
+            // 
+            this.header_Name.Text = "Name";
+            this.header_Name.Width = 150;
+            // 
+            // header_Author
+            // 
+            this.header_Author.Text = "Author";
+            this.header_Author.Width = 90;
+            // 
+            // header_Version
+            // 
+            this.header_Version.Text = "Version";
+            // 
+            // header_Description
+            // 
+            this.header_Description.Text = "Description";
+            this.header_Description.Width = 200;
+            // 
+            // header_Warnings
+            // 
+            this.header_Warnings.Text = "Warnings";
+            this.header_Warnings.Width = 120;
+            // 
+            // header_Location
+            // 
+            this.header_Location.Text = "Location";
+            this.header_Location.Width = 150;
             // 
             // panel1
             // 
@@ -327,15 +383,46 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.upClick);
             // 
-            // outputPanel
+            // statusStrip1
             // 
-            this.outputPanel.Controls.Add(this.textBox1);
-            this.outputPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.outputPanel.Location = new System.Drawing.Point(0, 287);
-            this.outputPanel.Name = "outputPanel";
-            this.outputPanel.Size = new System.Drawing.Size(832, 226);
-            this.outputPanel.TabIndex = 4;
-            this.outputPanel.Visible = false;
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.refreshMods,
+            this.modNumberLabel,
+            this.toolStripStatusLabel1,
+            this.percentageLabel});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 611);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.ShowItemToolTips = true;
+            this.statusStrip1.Size = new System.Drawing.Size(998, 22);
+            this.statusStrip1.TabIndex = 2;
+            // 
+            // refreshMods
+            // 
+            this.refreshMods.AutoToolTip = false;
+            this.refreshMods.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.refreshMods.DropDownButtonWidth = 0;
+            this.refreshMods.Image = global::FoundationMM.Properties.Resources.ico_refresh;
+            this.refreshMods.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.refreshMods.Name = "refreshMods";
+            this.refreshMods.Size = new System.Drawing.Size(21, 20);
+            this.refreshMods.Click += new System.EventHandler(this.refreshModsClick);
+            // 
+            // modNumberLabel
+            // 
+            this.modNumberLabel.Name = "modNumberLabel";
+            this.modNumberLabel.Size = new System.Drawing.Size(95, 17);
+            this.modNumberLabel.Text = "0 mods available";
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(867, 17);
+            this.toolStripStatusLabel1.Spring = true;
+            // 
+            // percentageLabel
+            // 
+            this.percentageLabel.Name = "percentageLabel";
+            this.percentageLabel.Size = new System.Drawing.Size(0, 17);
             // 
             // textBox1
             // 
@@ -348,6 +435,16 @@
             this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBox1.Size = new System.Drawing.Size(832, 226);
             this.textBox1.TabIndex = 0;
+            // 
+            // outputPanel
+            // 
+            this.outputPanel.Controls.Add(this.textBox1);
+            this.outputPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.outputPanel.Location = new System.Drawing.Point(0, 287);
+            this.outputPanel.Name = "outputPanel";
+            this.outputPanel.Size = new System.Drawing.Size(832, 226);
+            this.outputPanel.TabIndex = 4;
+            this.outputPanel.Visible = false;
             // 
             // tabControl1
             // 
@@ -376,62 +473,6 @@
             this.tabPage1.Text = "My Mods";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // listView1
-            // 
-            this.listView1.AllowDrop = true;
-            this.listView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.listView1.CheckBoxes = true;
-            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.header_Name,
-            this.header_Author,
-            this.header_Version,
-            this.header_Description,
-            this.header_Warnings,
-            this.header_Location});
-            this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listView1.FullRowSelect = true;
-            this.listView1.Location = new System.Drawing.Point(0, 0);
-            this.listView1.MultiSelect = false;
-            this.listView1.Name = "listView1";
-            this.listView1.ShowItemToolTips = true;
-            this.listView1.Size = new System.Drawing.Size(832, 513);
-            this.listView1.TabIndex = 1;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.Details;
-            this.listView1.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.listView1_ColumnClick);
-            this.listView1.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.listView1_ItemCheck);
-            this.listView1.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
-            this.listView1.Click += new System.EventHandler(this.listView1_SelectedIndexChanged);
-            // 
-            // header_Name
-            // 
-            this.header_Name.Text = "Name";
-            this.header_Name.Width = 150;
-            // 
-            // header_Author
-            // 
-            this.header_Author.Text = "Author";
-            this.header_Author.Width = 90;
-            // 
-            // header_Version
-            // 
-            this.header_Version.Text = "Version";
-            // 
-            // header_Description
-            // 
-            this.header_Description.Text = "Description";
-            this.header_Description.Width = 200;
-            // 
-            // header_Warnings
-            // 
-            this.header_Warnings.Text = "Warnings";
-            this.header_Warnings.Width = 120;
-            // 
-            // header_Location
-            // 
-            this.header_Location.Text = "Location";
-            this.header_Location.Width = 150;
-            // 
             // infobar
             // 
             this.infobar.BackColor = System.Drawing.SystemColors.Control;
@@ -439,7 +480,7 @@
             this.infobar.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 72F));
             this.infobar.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 45F));
             this.infobar.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 55F));
-            this.infobar.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 171F));
+            this.infobar.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 173F));
             this.infobar.Controls.Add(this.infobarIcon, 0, 0);
             this.infobar.Controls.Add(this.infobarLPane, 1, 0);
             this.infobar.Controls.Add(this.infobarRPane, 2, 0);
@@ -470,7 +511,7 @@
             this.infobarLPane.Dock = System.Windows.Forms.DockStyle.Fill;
             this.infobarLPane.Location = new System.Drawing.Point(75, 3);
             this.infobarLPane.Name = "infobarLPane";
-            this.infobarLPane.Size = new System.Drawing.Size(259, 66);
+            this.infobarLPane.Size = new System.Drawing.Size(258, 66);
             this.infobarLPane.TabIndex = 1;
             // 
             // infobarCredits
@@ -508,9 +549,9 @@
             // 
             this.infobarRPane.Controls.Add(this.infobarDesc);
             this.infobarRPane.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.infobarRPane.Location = new System.Drawing.Point(340, 3);
+            this.infobarRPane.Location = new System.Drawing.Point(339, 3);
             this.infobarRPane.Name = "infobarRPane";
-            this.infobarRPane.Size = new System.Drawing.Size(317, 66);
+            this.infobarRPane.Size = new System.Drawing.Size(316, 66);
             this.infobarRPane.TabIndex = 2;
             // 
             // infobarDesc
@@ -522,17 +563,17 @@
             this.infobarDesc.Name = "infobarDesc";
             this.infobarDesc.ReadOnly = true;
             this.infobarDesc.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.infobarDesc.Size = new System.Drawing.Size(317, 66);
+            this.infobarDesc.Size = new System.Drawing.Size(316, 66);
             this.infobarDesc.TabIndex = 1;
             this.infobarDesc.Text = "infobarDesc";
             // 
             // infobarImage
             // 
             this.infobarImage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.infobarImage.Location = new System.Drawing.Point(660, 0);
+            this.infobarImage.Location = new System.Drawing.Point(658, 0);
             this.infobarImage.Margin = new System.Windows.Forms.Padding(0);
             this.infobarImage.Name = "infobarImage";
-            this.infobarImage.Size = new System.Drawing.Size(172, 72);
+            this.infobarImage.Size = new System.Drawing.Size(174, 72);
             this.infobarImage.TabIndex = 3;
             this.infobarImage.MouseClick += new System.Windows.Forms.MouseEventHandler(this.infobarImage_MouseClick);
             // 
@@ -600,6 +641,10 @@
             this.columnHeader5.Text = "Warnings";
             this.columnHeader5.Width = 120;
             // 
+            // columnDL_downloads
+            // 
+            this.columnDL_downloads.Text = "Users";
+            // 
             // columnHeader6
             // 
             this.columnHeader6.Text = "Location";
@@ -612,7 +657,7 @@
             this.infobar2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 72F));
             this.infobar2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 45F));
             this.infobar2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 55F));
-            this.infobar2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 172F));
+            this.infobar2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 174F));
             this.infobar2.Controls.Add(this.infobar2Icon, 0, 0);
             this.infobar2.Controls.Add(this.panel4, 1, 0);
             this.infobar2.Controls.Add(this.panel5, 2, 0);
@@ -644,7 +689,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(75, 3);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(258, 66);
+            this.panel4.Size = new System.Drawing.Size(257, 66);
             this.panel4.TabIndex = 1;
             // 
             // infobar2Credits
@@ -682,9 +727,9 @@
             // 
             this.panel5.Controls.Add(this.infobar2Desc);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel5.Location = new System.Drawing.Point(339, 3);
+            this.panel5.Location = new System.Drawing.Point(338, 3);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(317, 66);
+            this.panel5.Size = new System.Drawing.Size(316, 66);
             this.panel5.TabIndex = 2;
             // 
             // infobar2Desc
@@ -696,17 +741,17 @@
             this.infobar2Desc.Name = "infobar2Desc";
             this.infobar2Desc.ReadOnly = true;
             this.infobar2Desc.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.infobar2Desc.Size = new System.Drawing.Size(317, 66);
+            this.infobar2Desc.Size = new System.Drawing.Size(316, 66);
             this.infobar2Desc.TabIndex = 1;
             this.infobar2Desc.Text = "infobar2Desc";
             // 
             // infobar2Image
             // 
             this.infobar2Image.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.infobar2Image.Location = new System.Drawing.Point(659, 0);
+            this.infobar2Image.Location = new System.Drawing.Point(657, 0);
             this.infobar2Image.Margin = new System.Windows.Forms.Padding(0);
             this.infobar2Image.Name = "infobar2Image";
-            this.infobar2Image.Size = new System.Drawing.Size(173, 72);
+            this.infobar2Image.Size = new System.Drawing.Size(175, 72);
             this.infobar2Image.TabIndex = 3;
             this.infobar2Image.MouseClick += new System.Windows.Forms.MouseEventHandler(this.infobar2Image_MouseClick);
             // 
@@ -739,10 +784,6 @@
             this.button16.Text = "Download Checked Mods";
             this.button16.UseVisualStyleBackColor = true;
             this.button16.Click += new System.EventHandler(this.button16_Click);
-            //
-            // columnDL_downloads
-            // 
-            this.columnDL_downloads.Text = "Users";
             // 
             // tabPage3
             // 
@@ -905,7 +946,7 @@
             this.listView5.Size = new System.Drawing.Size(236, 190);
             this.listView5.TabIndex = 3;
             this.listView5.UseCompatibleStateImageBehavior = false;
-            this.listView5.View = System.Windows.Forms.View.Details;
+            this.listView5.View = System.Windows.Forms.View.Tile;
             // 
             // columnHeader7
             // 
@@ -963,7 +1004,7 @@
             this.listView4.Size = new System.Drawing.Size(236, 190);
             this.listView4.TabIndex = 3;
             this.listView4.UseCompatibleStateImageBehavior = false;
-            this.listView4.View = System.Windows.Forms.View.Details;
+            this.listView4.View = System.Windows.Forms.View.Tile;
             // 
             // Player
             // 
@@ -1070,47 +1111,6 @@
             this.button8.UseVisualStyleBackColor = true;
             this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
-            // percentageLabel
-            // 
-            this.percentageLabel.Name = "percentageLabel";
-            this.percentageLabel.Size = new System.Drawing.Size(0, 17);
-            // 
-            // statusStrip1
-            // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.refreshMods,
-            this.modNumberLabel,
-            this.toolStripStatusLabel1,
-            this.percentageLabel});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 611);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.ShowItemToolTips = true;
-            this.statusStrip1.Size = new System.Drawing.Size(998, 22);
-            this.statusStrip1.TabIndex = 2;
-            // 
-            // refreshMods
-            // 
-            this.refreshMods.AutoToolTip = false;
-            this.refreshMods.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.refreshMods.DropDownButtonWidth = 0;
-            this.refreshMods.Image = global::FoundationMM.Properties.Resources.ico_refresh;
-            this.refreshMods.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.refreshMods.Name = "refreshMods";
-            this.refreshMods.Size = new System.Drawing.Size(21, 20);
-            this.refreshMods.Click += new System.EventHandler(this.refreshModsClick);
-            // 
-            // modNumberLabel
-            // 
-            this.modNumberLabel.Name = "modNumberLabel";
-            this.modNumberLabel.Size = new System.Drawing.Size(95, 17);
-            this.modNumberLabel.Text = "0 mods available";
-            // 
-            // toolStripStatusLabel1
-            // 
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(658, 17);
-            this.toolStripStatusLabel1.Spring = true;
-            // 
             // Window
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1128,6 +1128,8 @@
             this.groupBox3.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.outputPanel.ResumeLayout(false);
             this.outputPanel.PerformLayout();
             this.tabControl1.ResumeLayout(false);
@@ -1153,8 +1155,6 @@
             this.panel3.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
