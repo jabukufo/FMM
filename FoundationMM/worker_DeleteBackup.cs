@@ -29,7 +29,11 @@ namespace FoundationMM
                     }
                     else
                     {
-                        File.Delete(Path.Combine(mapsPath, "fmmbak", file));
+                        try
+                        {
+                            File.Delete(Path.Combine(mapsPath, "fmmbak", file));
+                        }
+                        catch { }
                     }
                 }
             }
