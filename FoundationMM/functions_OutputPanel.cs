@@ -12,6 +12,7 @@ namespace FoundationMM
         public delegate void appendNewOutputCallback(object control, dynamic output);
         public delegate void showMessageBoxCallback(string output);
 
+        // TODO: Clean this stuff up
         private void appendNewOutput(object control, dynamic output)
         {
             try
@@ -26,7 +27,11 @@ namespace FoundationMM
                 }
                 catch
                 {
-                    ((Button)control).Enabled = output;
+                    try
+                    {
+                        ((Button)control).Enabled = output;
+                    }
+                    catch { }
                 }
             }
         }

@@ -165,12 +165,10 @@ namespace FoundationMM
             }
             percentageLabel.Text = string.Empty;
 
-            // True == the server list is being updated; false == it is not being updated.
-            // This is needed so that we can check it before starting the background worker.
-            // TODO: wtf is this here for... forgot why I wrote this^ and it doesnt make sense
-            serverRefreshProg = false;
-
             tabControl1.Enabled = true;
+
+            // TODO: add a check to make sure all the mods the server requires were installed before
+            // enabling connect button and hiding the mod-sync button.
             button8.Enabled = true;
             groupBox5.Hide();
             button9.Hide();

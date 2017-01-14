@@ -95,6 +95,15 @@ namespace FoundationMM
             aProp.SetValue(c, true, null);
         }
 
+        public void UpdateColorControls(Control parent, Color color)
+        {
+            parent.ForeColor = color;
+            foreach (Control child in parent.Controls)
+            {
+                UpdateColorControls(child, color);
+            }
+        }
+
         private void Window_Load(object sender, EventArgs e)
         {
             // attempt double buffering on OSes that support it.
@@ -189,7 +198,13 @@ namespace FoundationMM
             DirectoryInfo dir0 = Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "mods", "tagmods"));
             string identifier = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "fmm.ini");
             string langIdentifier = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "fmm_lang.ini");
+
+
 #if !DEBUG
+            DateTime now = DateTime.Now;
+            if (now.Month == 4 && now.Day == 20)
+                UpdateColorControls(this, Color.Green);
+
             if (!File.Exists(Path.Combine(System.IO.Directory.GetCurrentDirectory(), "mtndew.dll")))
             {
                 MessageBox.Show("The FMM zip should be extracted to the root of your ElDewrito directory.");
@@ -322,7 +337,7 @@ namespace FoundationMM
             }
 
 #endif
-            IniFile ini2 = new IniFile(identifier);
+        IniFile ini2 = new IniFile(identifier);
 
             Log("Looking for installers...");
             lookForFMMInstallers();
@@ -331,6 +346,7 @@ namespace FoundationMM
             Log("Ordering installers as saved...");
             checkFMMInstallerOrder();
             
+            // TODO: Check if the offlinemode stuff here is working for the serverbrowser tab.
             if (ini2.IniReadValue("FMMPrefs", "OfflineMode").ToLower() != "true")
             {
                 // Begins updating the server-list when the app is launched.
@@ -351,6 +367,13 @@ namespace FoundationMM
             if (ini2.IniReadValue("FMMPrefs", "OfflineMode").ToLower() == "true")
             {
                 tabControl1.TabPages.Remove(tabPage2);
+                tabControl1.Appearance = TabAppearance.Buttons;
+                tabControl1.ItemSize = new Size(0, 1);
+                tabControl1.SizeMode = TabSizeMode.Fixed;
+                tabControl1.Margin = new Padding(0, 0, 0, 0);
+
+                // This should remove the serverbrowser tab when in offlinemode.
+                tabControl1.TabPages.Remove(tabPage3);
                 tabControl1.Appearance = TabAppearance.Buttons;
                 tabControl1.ItemSize = new Size(0, 1);
                 tabControl1.SizeMode = TabSizeMode.Fixed;
@@ -645,6 +668,7 @@ namespace FoundationMM
             // Updates the "Server-Info" panel to show additional information on the selected item.
             ServerInfo();
 
+#if RELEASE
             // Checks if USER and SERVER ED versions match, if not, disable the connect button for this server, and "return"
             if (File.Exists(Environment.CurrentDirectory + "\\mtndew.dll"))
             {
@@ -660,6 +684,7 @@ namespace FoundationMM
                 richTextBox1.Text = $"Host running different version!\n\nTheirs: {globalHost.eldewritoVersion}\nYours: {globalEDVersion}";
                 return;
             }
+#endif
 
 
             // If the globalHost's "mods" property is not null, the server has mods that are required to be installed before connecting...
@@ -672,11 +697,6 @@ namespace FoundationMM
                     // (it should get added to "fmmRequired.dat" when a mod marked "Require=True" is installed.)
                     if (!requiredMods.Contains(mod))
                     {
-                        //TODO: if the mod is downloaded but not installed, it shouldn't download it,
-                        //but should still install it. (no reason to download if it already exists)
-                        // add this into download portion of ModSync:
-                        // if (!File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "mods", mod)))
-
                         // Disables the "Connect" button - Don't allow connecting to the server if the server requires mods that have not
                         // been installed yet.
                         button8.Enabled = false;
@@ -786,12 +806,6 @@ namespace FoundationMM
 
             HostServer bestServer = new HostServer();
 
-            // Set the USER's ED version based off of their mtndew.dll, if it gets located...
-            if (File.Exists(Environment.CurrentDirectory + "\\mtndew.dll"))
-            {
-                var _eldoritoVersion = FileVersionInfo.GetVersionInfo(Environment.CurrentDirectory + "\\mtndew.dll");
-                globalEDVersion = _eldoritoVersion.ProductVersion;
-            }
 
             foreach (ListViewItem server in listView3.Items)
             {
@@ -799,10 +813,19 @@ namespace FoundationMM
                 HostServer evaluateServer = (HostServer)server.Tag;
 
                 // Skip servers that are full, passworded, non-matching ELDEWRITO version, or non-matching GAME version.
-                if (evaluateServer.numPlayers == evaluateServer.maxPlayers 
-                    || evaluateServer.passworded == "🔒"
-                    || evaluateServer.eldewritoVersion != globalEDVersion) // NOTE: comment this line to disable version checking for QuickMatch
+                if (evaluateServer.numPlayers == evaluateServer.maxPlayers
+                    || evaluateServer.passworded == "🔒")
                     continue;
+#if RELEASE
+                                // Set the USER's ED version based off of their mtndew.dll, if it gets located...
+                                if (File.Exists(Environment.CurrentDirectory + "\\mtndew.dll"))
+                                {
+                                    var _eldoritoVersion = FileVersionInfo.GetVersionInfo(Environment.CurrentDirectory + "\\mtndew.dll");
+                                    globalEDVersion = _eldoritoVersion.ProductVersion;
+                                }
+                                if (evaluateServer.eldewritoVersion != globalEDVersion)
+                                    continue;
+#endif
 
                 // Reads the list of mods that the user has installed that were marked "Required=True" in the .ini file.
                 string requiredMods = string.Empty;
@@ -869,7 +892,7 @@ namespace FoundationMM
             // Set globalHost to the server that was determined to be "best", and then connect to it (unless no possible matches
             // were found which could be due to ED version mismatches, or no server's that aren't "full".) Notify user if
             // no servers are available.
-            if (bestServer.ipAddress != "")
+            if (bestServer.ipAddress != string.Empty) // The ipAddress property in HostServer objects is by default an empty string...
             {
                 globalHost = bestServer;
                 ConnectToServer();

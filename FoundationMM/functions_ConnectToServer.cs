@@ -302,20 +302,29 @@ namespace FoundationMM
                 {
                     try
                     {
-                        // Try to launch ElDewrito
-                        ProcessStartInfo eldorado = new ProcessStartInfo("eldorado.exe");
-                        eldorado.WindowStyle = ProcessWindowStyle.Normal;
-                        eldorado.Arguments = "-launcher";
-                        Process.Start(eldorado);
-                        // If it got this far without throwing an exception, ElDewrito was successfully launched.
-                        // Notify the user of this.
-                        richTextBox1.Invoke(new appendNewOutputCallback(this.appendNewOutput), new object[] { richTextBox1, "ElDewrito has ben launched!" });
+                        if (File.Exists("eldorado.exe"))
+                        {
+                            // Try to launch ElDewrito
+                            ProcessStartInfo eldorado = new ProcessStartInfo("eldorado.exe");
+                            eldorado.WindowStyle = ProcessWindowStyle.Normal;
+                            eldorado.Arguments = "-launcher";
+                            Process.Start(eldorado);
+                            // If it got this far without throwing an exception, ElDewrito was successfully launched.
+                            // Notify the user of this.
+                            richTextBox1.Invoke(new appendNewOutputCallback(this.appendNewOutput), new object[] { richTextBox1, "ElDewrito has ben launched!" });
+                        }
+                        else // If eldorado.exe doesn't exist, inform the user and return to break out of the DewRcon loop.
+                        {
+                            MessageBox.Show("Unable to locate \"eldorado.exe\". Is it in the correct folder?");
+                            return;
+                        }
                     }
                     catch (Exception ex)
                     {
-                        // NOTE: If an exception was thrown, ElDewrito did not launch for some reason... Most likely because eldorado.exe
-                        // was not found.
+                        // If an exception was thrown, ElDewrito did not launch for a reason other than it not existing in the
+                        // correct folder. Inform the user and return to break out of the DewRcon loop;
                         MessageBox.Show(ex.Message);
+                        return;
                     }
                 }
 

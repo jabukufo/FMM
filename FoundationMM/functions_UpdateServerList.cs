@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using System.Net.Sockets;
 using System.Globalization;
+using System.Drawing;
 
 namespace FoundationMM
 {
@@ -33,8 +34,8 @@ namespace FoundationMM
         /// </summary>
         private async void UpdateServerList()
         {
-            // This is used for downloading the server-info .jsons...
-            HttpClient client = new HttpClient() { MaxResponseContentBufferSize = 1000000 };
+        // This is used for downloading the server-info .jsons...
+        HttpClient client = new HttpClient() { MaxResponseContentBufferSize = 1000000 };
 
             // List of the Task<string[]> from the output of ProcessURLAsync for each server, so that they can be awaited
             // in the "Add Servers To Listview" #Region.
@@ -83,6 +84,65 @@ namespace FoundationMM
                 /// Awaits the tasks in "serverTaskStrings", serializes the .jsons from that output into "HostServer" objects,
                 /// creates a ListViewItem from the properties of that HostServer, and then adds it to "listView3".
                 #region Add Servers To Listview
+
+                #region NOTE: Everthing inside this "#if DEBUG" is for adding a fake server to the server browser for debugging purposes.
+#if DEBUG
+                HostServer debugHost = new HostServer();
+                debugHost.assassinationEnabled = "True";
+                debugHost.eldewritoVersion = "0.5.1.1";
+                debugHost.gameVersion = "1.106708_cert_ms23___release";
+                debugHost.hostPlayer = "debugHostPlayer";
+                debugHost.ipAddress = "debug.host.fake.ip";
+                debugHost.isDedicated = true;
+                debugHost.map = "debugMap";
+                debugHost.mapFile = "guardian";
+                debugHost.maxPlayers = 16;
+                debugHost.mods.Add("tagmods\\Station\\Station.fm");
+                debugHost.name = "Debug Fake Server";
+                debugHost.numPlayers = 15;
+                debugHost.passworded = "🔒";
+                debugHost.ping = "-1 (fakeIP)";
+                debugHost.port = 11774;
+                debugHost.sprintEnabled = "true";
+                debugHost.sprintUnlimitedEnabled = "true";
+                debugHost.status = "inGame";
+                debugHost.teams = true;
+                debugHost.variant = "Debug BR's";
+                debugHost.variantType = "slayer";
+                debugHost.VoIP = true;
+                debugHost.xnaddr = "n0t4r341xn4ddr355";
+                debugHost.xnkid = "n0t4r341xnk1d";
+
+                for (int i = 1; i <= debugHost.numPlayers; i++)
+                {
+                    Player player = new Player();
+                    player.name = "player" + i;
+                    player.score = i;
+                    player.assists = i;
+                    player.kills = i;
+                    player.deaths = i;
+                    player.isAlive = true;
+                    player.uid = "n0t4r341u1d";
+
+                    if (i <= debugHost.maxPlayers / 2)
+                        player.team = 0;
+                    else
+                        player.team = 1;
+
+                    debugHost.players.Add(player);
+                }
+
+                listView3.Invoke((MethodInvoker)delegate
+                {
+                    var item = new ListViewItem(new[] {
+                                    debugHost.passworded, debugHost.name, debugHost.hostPlayer, debugHost.ping, debugHost.map, debugHost.variantType, debugHost.variant, debugHost.numPlayers.ToString() + '/' + debugHost.maxPlayers.ToString()
+                                });
+                    item.Tag = debugHost;
+
+                    listView3.Items.Add(item);
+                });
+#endif
+                #endregion
 
                 // Every Task<string[]> in "serverTaskStrings" needs to be awaited, serialized, and then added to "listView3".
                 foreach (Task<string[]> serverTaskString in serverTaskStrings)
