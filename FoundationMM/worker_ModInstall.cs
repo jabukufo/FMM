@@ -10,8 +10,6 @@ namespace FoundationMM
 {
     public partial class Window : Form
     {
-        // TODO: Comment all the stuff related to "fmmRequired.dat" in this file.
-
         bool showInstallers = false;
 
         private void modInstallWorker_DoWork(object sender, DoWorkEventArgs e)
@@ -20,6 +18,7 @@ namespace FoundationMM
             
             BackgroundWorker worker = sender as BackgroundWorker;
             int i = 0;
+            worker.ReportProgress(i);
 
             // Save File Storing Checked Items And Order
 
@@ -28,27 +27,29 @@ namespace FoundationMM
             fmmdatWiper.SetLength(0);
             fmmdatWiper.Close();
 
-            string fmmdatRequired = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "fmmRequired.dat");
-            FileStream fmmdatRequiredWiper = File.Open(fmmdat, FileMode.OpenOrCreate);
-            fmmdatRequiredWiper.SetLength(0);
-            fmmdatRequiredWiper.Close();
-
             StreamWriter fmmdatWriter = new StreamWriter(fmmdat);
-            StreamWriter fmmdatRequiredWriter = new StreamWriter(fmmdatRequired);
+
             foreach (ListViewItem item in listView1.CheckedItems.Cast<ListViewItem>().AsEnumerable().Reverse())
             {
                 fmmdatWriter.WriteLine(item.SubItems[0].Text);
-
-                IniFile ini = new IniFile(Path.Combine(Directory.GetCurrentDirectory(), "mods", item.SubItems[5].Text.Replace(".fm", ".ini")));
-                if (ini.IniReadValue("FMMInfo", "Required").ToLower() == "true")
-                {
-                    fmmdatRequiredWriter.WriteLine(item.SubItems[5].Text);
-                }
             }
             fmmdatWriter.Close();
-            fmmdatRequiredWriter.Close();
 
-            worker.ReportProgress(i);
+            // fmmRequired.dat is basically the same as fmm.dat, except that ONLY mods with "Required=True" set get added to it, and
+            // the mod-location is listed instead of just the mod-name (to simplify parsing into the github url.)
+            // This is used by server hosts (if they are running the modified mtndew.dll) for adding required mods to their
+            // server-info.json that gets posted on port 11775. 
+            //It is used by players trying to connect to those servers to determine whether they have those mods installed.
+            string fmmdatRequired = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "fmmRequired.dat");
+            // Wipes the fmmRequired.dat file when mods are installed (because old mods effectively are uninstalled by FMM
+            // overwriting all the .dats.)
+            FileStream fmmdatRequiredWiper = File.Open(fmmdat, FileMode.OpenOrCreate);
+            fmmdatRequiredWiper.SetLength(0);
+            fmmdatRequiredWiper.Close();
+                        
+            // Used for writing mods marked "required=true" to the fmmRequired.dat file.
+            // Writing takes place IF the mod is successfully installed.
+            StreamWriter fmmdatRequiredWriter = new StreamWriter(fmmdatRequired);
 
             //apply mods
             foreach (ListViewItem item in listView1.CheckedItems.Cast<ListViewItem>().AsEnumerable().Reverse())
@@ -112,9 +113,18 @@ namespace FoundationMM
                 }
                 finally
                 {
+                    // Checks if the mod has "Required=True" set.
+                    IniFile ini = new IniFile(Path.Combine(Directory.GetCurrentDirectory(), "mods", item.SubItems[5].Text.Replace(".fm", ".ini")));
+                    if (ini.IniReadValue("FMMInfo", "Required").ToLower() == "true")
+                    {
+                        // If "Required=True" is set, add the mod-location as a new line to fmmRequired.dat.
+                        fmmdatRequiredWriter.WriteLine(item.SubItems[5].Text);
+                    }
+
                     File.Delete(batFile);
                 }
             }
+            fmmdatRequiredWriter.Close(); // Close the fmmdatRequiredWriter.
         }
 
         private void modInstallWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
