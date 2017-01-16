@@ -44,9 +44,6 @@ namespace FoundationMM
             // Using a WebClient object for downloading the MasterServer .jsons.
             using (var wc = new WebClient())
             {
-                // TODO: Check if this is actually needed...
-                wc.Proxy = WebRequest.DefaultWebProxy;
-
                 // This is to prevent Red-M's master server from 403'ing.
                 wc.Headers.Add("User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36");
 
@@ -85,62 +82,89 @@ namespace FoundationMM
                 /// creates a ListViewItem from the properties of that HostServer, and then adds it to "listView3".
                 #region Add Servers To Listview
 
-                #region NOTE: Everthing inside this "#if DEBUG" is for adding a fake server to the server browser for debugging purposes.
+                #region NOTE: Everthing inside this "#if DEBUG" is for adding a fake server(s) to the server browser for debugging purposes.
 #if DEBUG
-                HostServer debugHost = new HostServer();
-                debugHost.assassinationEnabled = "True";
-                debugHost.eldewritoVersion = "0.5.1.1";
-                debugHost.gameVersion = "1.106708_cert_ms23___release";
-                debugHost.hostPlayer = "debugHostPlayer";
-                debugHost.ipAddress = "debug.host.fake.ip";
-                debugHost.isDedicated = true;
-                debugHost.map = "debugMap";
-                debugHost.mapFile = "guardian";
-                debugHost.maxPlayers = 16;
-                debugHost.mods.Add("tagmods\\Station\\Station.fm");
-                debugHost.name = "Debug Fake Server";
-                debugHost.numPlayers = 15;
-                debugHost.passworded = "🔒";
-                debugHost.ping = "-1 (fakeIP)";
-                debugHost.port = 11774;
-                debugHost.sprintEnabled = "true";
-                debugHost.sprintUnlimitedEnabled = "true";
-                debugHost.status = "inGame";
-                debugHost.teams = true;
-                debugHost.variant = "Debug BR's";
-                debugHost.variantType = "slayer";
-                debugHost.VoIP = true;
-                debugHost.xnaddr = "n0t4r341xn4ddr355";
-                debugHost.xnkid = "n0t4r341xnk1d";
-
-                for (int i = 1; i <= debugHost.numPlayers; i++)
+                for (int s = 0; s < 4; s++)
                 {
-                    Player player = new Player();
-                    player.name = "player" + i;
-                    player.score = i;
-                    player.assists = i;
-                    player.kills = i;
-                    player.deaths = i;
-                    player.isAlive = true;
-                    player.uid = "n0t4r341u1d";
+                    HostServer debugHost = new HostServer();
+                    debugHost.assassinationEnabled = "True";
+                    debugHost.eldewritoVersion = "0.5.1.1";
+                    debugHost.gameVersion = "1.106708_cert_ms23___release";
+                    debugHost.hostPlayer = "debugHostPlayer";
+                    debugHost.ipAddress = "debug.host.fake.ip";
+                    debugHost.isDedicated = true;
+                    debugHost.map = "debugMap";
+                    debugHost.mapFile = "guardian";
+                    debugHost.maxPlayers = 16;
+                    debugHost.name = "Debug Fake Server";
+                    debugHost.numPlayers = 15;
+                    debugHost.passworded = "";
+                    debugHost.ping = "-1 (fakeIP)";
+                    debugHost.port = 11774;
+                    debugHost.sprintEnabled = "true";
+                    debugHost.sprintUnlimitedEnabled = "true";
+                    debugHost.status = "inGame";
+                    debugHost.teams = true;
+                    debugHost.variant = "Debug BR's";
+                    debugHost.variantType = "slayer";
+                    debugHost.VoIP = true;
+                    debugHost.xnaddr = "n0t4r341xn4ddr355";
+                    debugHost.xnkid = "n0t4r341xnk1d";
 
-                    if (i <= debugHost.maxPlayers / 2)
-                        player.team = 0;
-                    else
-                        player.team = 1;
+                    // To alter specific debug servers, just set the properties in one of these cases.
+                    // Change the middle number in the enclosing for-loop to increase or decrease the amount of servers.
+                    switch (s)
+                    {
+                        case 0:
+                            debugHost.name = "Debug ModSync Host";
+                            debugHost.mods.Add("tagmods\\Lockout\\Lockout.fm");
+                            debugHost.mods.Add("tagmods\\Station\\Station.fm");
+                            break;
+                        case 1:
+                            debugHost.name = "Debug Password Host";
+                            debugHost.passworded = "🔒";
+                            break;
+                        case 2:
+                            debugHost.name = "Debug FullGame Host";
+                            debugHost.numPlayers = debugHost.maxPlayers;
+                            break;
+                        case 3:
+                            debugHost.name = "Debug FFA Host";
+                            debugHost.teams = false;
+                            break;
+                        default:
+                            break;
+                    }
 
-                    debugHost.players.Add(player);
-                }
+                    for (int i = 1; i <= debugHost.numPlayers; i++)
+                    {
+                        Player player = new Player();
+                        player.name = "player" + i;
+                        player.score = i;
+                        player.assists = i;
+                        player.kills = i;
+                        player.deaths = i;
+                        player.isAlive = true;
+                        player.uid = "n0t4r341u1d";
 
-                listView3.Invoke((MethodInvoker)delegate
-                {
-                    var item = new ListViewItem(new[] {
+                        if (i <= debugHost.maxPlayers / 2)
+                            player.team = 0;
+                        else
+                            player.team = 1;
+
+                        debugHost.players.Add(player);
+                    }
+
+                    listView3.Invoke((MethodInvoker)delegate
+                    {
+                        var item = new ListViewItem(new[] {
                                     debugHost.passworded, debugHost.name, debugHost.hostPlayer, debugHost.ping, debugHost.map, debugHost.variantType, debugHost.variant, debugHost.numPlayers.ToString() + '/' + debugHost.maxPlayers.ToString()
-                                });
-                    item.Tag = debugHost;
+                                    });
+                        item.Tag = debugHost;
 
-                    listView3.Items.Add(item);
-                });
+                        listView3.Items.Add(item);
+                    });
+                }
 #endif
                 #endregion
 
@@ -221,7 +245,7 @@ namespace FoundationMM
                     }
                     catch { continue; }
                 }
-                #endregion
+                #endregion 
             }
             client.Dispose();
         }
@@ -301,12 +325,13 @@ namespace FoundationMM
         public bool isAlive { get; set; } = false;
         public string uid { get; set; } = "";
     }
+
     public class HostServer
     {
         // Initializing these to a value so that no errors related to null objects appear in ListView3 updating
         // this is a problem because some values are not parsed in the server info json if they are null, so they remain null.
         public string name { get; set; } = "";
-        public int port { get; set; } = 11775;
+        public int port { get; set; } = 0;
         public string hostPlayer { get; set; } = "";
         public bool isDedicated { get; set; } = false;
         public string sprintEnabled { get; set; } = "";
@@ -323,12 +348,14 @@ namespace FoundationMM
         public int maxPlayers { get; set; } = 0;
         public string xnkid { get; set; } = "";
         public string xnaddr { get; set; } = "";
-        public List<Player> players { get; set; } = new List<Player> { new Player() };
+        public List<Player> players { get; set; } = new List<Player> { };
         public List<string> mods { get; set; } = new List<string> { };
         public string gameVersion { get; set; } = "";
         public string eldewritoVersion { get; set; } = "";
         public string ipAddress { get; set; } = "";
-        public string ping { get; set; } = "9999";
+        // intializing this to "99999" so that if pinging a server fails, it gets set to "99999"
+        // so that sorting the list by the "ping" column sorts failed pings to the bottom.
+        public string ping { get; set; } = "99999";
         public string passworded { get; set; } = "";
     }
 }
