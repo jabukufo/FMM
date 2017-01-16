@@ -165,7 +165,6 @@ namespace FoundationMM
         /// If the selected server requires a password, it prompts for user input,
         /// then attempts to connect to the server through DewRcon.
         /// If ElDewrito is not running, the DewRcon method will try to launch it...
-        /// TODO: figure out if my "background process detection" in here actually works...
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

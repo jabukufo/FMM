@@ -347,7 +347,6 @@ namespace FoundationMM
             Log("Ordering installers as saved...");
             checkFMMInstallerOrder();
             
-            // TODO: Check if the offlinemode stuff here is working for the serverbrowser tab.
             if (ini2.IniReadValue("FMMPrefs", "OfflineMode").ToLower() != "true")
             {
                 // Begins updating the server-list when the app is launched.
