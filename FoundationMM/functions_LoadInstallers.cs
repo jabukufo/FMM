@@ -104,7 +104,12 @@ namespace FoundationMM
             }
             using (var client = new WebClient())
             {
-                client.DownloadFile("https://raw.githubusercontent.com/Clef-0/FMM-Mods/master/meta/links.txt", Path.Combine(Directory.GetCurrentDirectory(), "fmm-svn", "links.txt"));
+                // Added this here to silence the exception that is thrown if "OfflineMode=False" but the user is not connected to the internet.
+                try
+                {
+                    client.DownloadFile("https://raw.githubusercontent.com/Clef-0/FMM-Mods/master/meta/links.txt", Path.Combine(Directory.GetCurrentDirectory(), "fmm-svn", "links.txt"));
+                }
+                catch { }
             }
             using (var client = new HttpClient())
             {
