@@ -56,7 +56,7 @@ namespace FoundationMM
                         // "Checkout" the mod folder from the URL, to the local location...
                         svnClient.CheckOut(new Uri(remLocation), locLocation);
 
-                        // TODO: test this. Updates qmarchi's fractalcore mod-download counter.
+                        // Updates qmarchi's fractalcore mod-download counter.
                         using (var httpClient = new HttpClient())
                         {
                             try
