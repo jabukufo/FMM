@@ -95,7 +95,6 @@ namespace FoundationMM
             aProp.SetValue(c, true, null);
         }
 
-        // Sets a control and all it's recursive children's foreground(text) color.
         public void UpdateColorControls(Control parent, Color color)
         {
             parent.ForeColor = color;
@@ -200,11 +199,11 @@ namespace FoundationMM
             string identifier = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "fmm.ini");
             string langIdentifier = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "fmm_lang.ini");
 
-            // Sets foreground color for every control to "Green" if the date is April 20.
+
+#if !DEBUG
             DateTime now = DateTime.Now;
             if (now.Month == 4 && now.Day == 20)
                 UpdateColorControls(this, Color.Green);
-#if !DEBUG
 
             if (!File.Exists(Path.Combine(System.IO.Directory.GetCurrentDirectory(), "mtndew.dll")))
             {
@@ -657,17 +656,7 @@ namespace FoundationMM
             // Sets "globalHost" to the "HostServer" object that is stored in the selected ListViewItem.Tag.
             if (listView3.SelectedItems.Count != 0)
                 globalHost = (HostServer)listView3.SelectedItems[0].Tag;
-            // If the selected server requires password show the "Password" groupboxe, otherwise hide it.
-            textBox2.Text = "";
-            if (globalHost.passworded == "🔒")
-                groupBox10.Show();
-            else
-                groupBox10.Hide();
 
-            // Updates the "Server-Info" panel to show additional information on the selected item.
-            ServerInfo();
-
-#if RELEASE
             // Sets the USER's ED version so that it can be compared with the server's ED version...
             if (File.Exists(Environment.CurrentDirectory + "\\mtndew.dll"))
             {
@@ -675,7 +664,16 @@ namespace FoundationMM
                 globalEDVersion = _eldoritoVersion.ProductVersion;
             }
 
+            // Updates the "Server-Info" panel to show additional information on the selected item.
+            ServerInfo();
+
+#if RELEASE
             // Checks if USER and SERVER ED versions match, if not, disable the connect button for this server, and "return"
+            if (File.Exists(Environment.CurrentDirectory + "\\mtndew.dll"))
+            {
+                var _eldoritoVersion = FileVersionInfo.GetVersionInfo(Environment.CurrentDirectory + "\\mtndew.dll");
+                globalEDVersion = _eldoritoVersion.ProductVersion;
+            }
             if (globalHost.eldewritoVersion != globalEDVersion)
             {
                 // Disables the connect button so users can't connect to a server running a different ED version.
@@ -720,7 +718,7 @@ namespace FoundationMM
 
                 // Add each mod in the globalModsToSync List to the RichTextBox to the right of the server list.
                 foreach (var mod in globalModsToSync)
-                    richTextBox1.Text += Path.GetFileNameWithoutExtension(mod) + "\n";
+                    richTextBox1.Text += mod + "\n";
 
                 // Finally, after all mods in the globalModsToSync List are added to the RichTextBox to the right of the server list,
                 // add text to the end of that in the RichTextBox to the right of the server list informing the user to click
@@ -736,6 +734,11 @@ namespace FoundationMM
         /// <param name="e"></param>
         private void button8_Click(object sender, EventArgs e)
         {
+            // If the host requires a password, a password dialog is shown, and the entered-password is stored in globalPassword.
+            // TODO: if the above TO-DO is true (it was... removed.), this can probably be moved into the "ConnectToServer" method.
+            //if (globalHost.passworded == "🔒")
+            //    globalPassword = PasswordDialog();
+
             ConnectToServer();
         }
 
@@ -847,7 +850,7 @@ namespace FoundationMM
 
                 // Tries to choose a server with players, with the best ping, that is in a game.
                 // In that priority order. Could probably be refactored to be more readable.
-#region "Best Server" logic...
+                #region "Best Server" logic...
                 if (evaluateServer.numPlayers > 0)
                 {
                     if (int.Parse(evaluateServer.ping) < int.Parse(bestServer.ping))
@@ -882,7 +885,7 @@ namespace FoundationMM
                         }
                     }
                 }
-#endregion
+                #endregion
             }
 
             // Set globalHost to the server that was determined to be "best", and then connect to it (unless no possible matches
