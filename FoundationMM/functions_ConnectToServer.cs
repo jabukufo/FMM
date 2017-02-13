@@ -1,21 +1,12 @@
-﻿using Ini;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
-using Newtonsoft.Json;
-using System.Net.NetworkInformation;
-using System.Net;
 using System.Threading.Tasks;
-using System.Net.Http;
-using System.Net.Sockets;
-using System.Text.RegularExpressions;
 using System.Text;
 using System.Linq;
-using SharpSvn;
-using System.Net.WebSockets;
-using System.Threading;
+using WebSocketSharp;
+using Microsoft.VisualBasic;
 
 namespace FoundationMM
 {
@@ -179,14 +170,10 @@ namespace FoundationMM
         /// <param name="e"></param>
         public async void ConnectToServer()
         {
-            // If the selected server requires password, prompt user to input it.
-            // TODO: test this (see "Window.cs" TODO in the "button8_Click" method.
-            if (globalHost.passworded == "🔒")
-                globalPassword = PasswordDialog();
+            globalPassword = textBox2.Text;
 
             // Kill background ED processes - This is necessary, because otherwise ED is detected as "Running"
             // and does not get launched by the DewRcon method.
-            // TODO: Test if this works. Difficult to test.
             try
             {
                 Process[] EDProcesses = Process.GetProcessesByName("eldorado");
@@ -194,8 +181,8 @@ namespace FoundationMM
                 {
                     foreach (var EDprocess in EDProcesses)
                     {
-                        // NOTE: Someone on interwebz said that background processes don't have a MainWindowHandle... Hard to test this
-                        // thoroughly since the "ED keeps running in background" bug is very random...
+                        // Background processes don't have a MainWindow handle, so this can be used to identify if the ED
+                        // process is running in the background.
                         if (EDprocess.MainWindowHandle == null || EDprocess.MainWindowHandle == (IntPtr)0)
                         {
                             EDprocess.Kill();
@@ -215,42 +202,6 @@ namespace FoundationMM
         }
 
         /// <summary>
-        /// Displays a simple form with a textbox, and a "continue" button.
-        /// Whatever is typed into the textbox when "continue" is pressed is returned to the method-call.
-        /// </summary>
-        /// <returns></returns>
-        public static string PasswordDialog()
-        {
-            // Setup the form and controls.
-            Form prompt = new Form();
-            prompt.Width = 200;
-            prompt.Height = 100;
-            prompt.FormBorderStyle = FormBorderStyle.FixedSingle; // Disable resizing the form...
-            prompt.Text = "";
-            Label textLabel = new Label() { Left = 5, Top = 5, Text = "Server-Password" };
-            TextBox inputBox = new TextBox() { Left = 5, Top = 35, Width = 95 };
-            Button confirmation = new Button() { Text = "Continue", Left = 105, Width = 75, Top = 34 };
-
-            // "Continue" button is clicked, close the form.
-            confirmation.Click += (sender, e) => { prompt.Close(); };
-
-            /// NOTE: Uncommenting the following will make what the user types be displayed as *'s.
-            /// This does not replace what is returned by the method.
-            //inputBox.PasswordChar = '*'; 
-
-            // Add the controls to the form.
-            prompt.Controls.Add(confirmation);
-            prompt.Controls.Add(textLabel);
-            prompt.Controls.Add(inputBox);
-
-            // Show the form.
-            prompt.ShowDialog();
-
-            // Return the text that was entered into the input box to the method-call.
-            return inputBox.Text;
-        }
-
-        /// <summary>
         /// Tries to connect to DewRcon at "ws://127.0.0.1:11776", if it can't connect, checks if ED is running.
         /// If it is not running, it launches it, then tries to connect to DewRcon again. Finally, after a connection
         /// to DewRcon has been established, a command is sent.
@@ -265,98 +216,89 @@ namespace FoundationMM
         /// (FishPhd's DewRcon code works on :2448 through TCP, however his code seems to either not receive a response
         /// from certain commands - notably, the "connect [ip]" command - or his response parsing drops it.
         /// This probably has something to do with connecting to DewRcon through :2448, the code behind it may be different
-        /// than that of DewRcon running on :11775.
-        /// 
+        /// than that of DewRcon running on :11776.
         /// </param>
         /// <returns></returns>
         private async Task DewRcon(string cmd, string uri = "ws://localhost:11776")
         {
-
-            // Initialize a null ClientWebSocket object to attempt to connect to DewRcon through.
-            // This needs to be initialized here so it can be used both inside and outside of the "Try" block.
-            ClientWebSocket webSocket = new ClientWebSocket();
-            try // Try to connect to DewRcon
+            await Task.Run(async () =>
             {
-                // NOTE: Not sure if this is needed, but the other server browsers appear to use it when checking in Fiddler2
-                webSocket.Options.AddSubProtocol("dew-rcon");
-                // Attempt to connect to DewRcon.
-                await webSocket.ConnectAsync(new Uri(uri), CancellationToken.None);
-                // If it gets this far without throwing an exception, it connected to DewRcon successfully.
-                // Update the RichTextBox to the right of the Server-List to inform the user that it has connected.
-                richTextBox1.Invoke(new appendNewOutputCallback(this.appendNewOutput), new object[] { richTextBox1, "Connected to DewRcon!" });
-                // Re-enable the "Connect" button.
-                button8.Invoke(new appendNewOutputCallback(this.appendNewOutput), new object[] { button8, true });
-            }
-            // NOTE: An exception probably means that ElDewrito isn't running and should be launched... Or maybe that this app isn't being run with
-            // administrator priviledges...
-            catch (Exception e)
-            {
-                // NOTE: if the exception is "UnauthorizedAccessException" then this application probably needs to be run as administrator
-                // (the "WebSocket" class that I used in the DewRcon method may require admin rights... TODO: Test if admin rights are needed
-                // and if this message box shows properly)
-                if (e.InnerException is UnauthorizedAccessException)
-                    MessageBox.Show(e.Message);
+                // The "dew-rcon" subprotocol is needed for a successful connection to DewRcon.
+                WebSocket webSocket = new WebSocket(uri, "dew-rcon");
 
-                if (Process.GetProcessesByName("eldorado").Count() == 0)
+                // Attempt to connect to the DewRcon server (does not throw an exception if failed, so instead we check the WebSocketState
+                // to see if it connected successfully.
+                webSocket.Connect();
+
+                if (webSocket.ReadyState == WebSocketState.Open)
                 {
-                    try
+                    // If it gets this far, it connected to DewRcon successfully.
+                    // Update the RichTextBox to the right of the Server-List to inform the user that it has connected.
+                    richTextBox1.Invoke(new appendNewOutputCallback(this.appendNewOutput), new object[] {
+                    richTextBox1, "Connected to DewRcon!" + webSocket.ReadyState
+                });
+                    // Re-enable the "Connect" button.
+                    button8.Invoke(new appendNewOutputCallback(this.appendNewOutput), new object[] { button8, true });
+                }
+                else
+                {
+                    if (Process.GetProcessesByName("eldorado").Count() == 0)
                     {
-                        if (File.Exists("eldorado.exe"))
+                        try
                         {
-                            // Try to launch ElDewrito
-                            ProcessStartInfo eldorado = new ProcessStartInfo("eldorado.exe");
-                            eldorado.WindowStyle = ProcessWindowStyle.Normal;
-                            eldorado.Arguments = "-launcher";
-                            Process.Start(eldorado);
-                            // If it got this far without throwing an exception, ElDewrito was successfully launched.
-                            // Notify the user of this.
-                            richTextBox1.Invoke(new appendNewOutputCallback(this.appendNewOutput), new object[] { richTextBox1, "ElDewrito has ben launched!" });
+                            if (File.Exists("eldorado.exe"))
+                            {
+                                // Try to launch ElDewrito
+                                ProcessStartInfo eldorado = new ProcessStartInfo("eldorado.exe");
+                                eldorado.WindowStyle = ProcessWindowStyle.Normal;
+                                eldorado.Arguments = "-launcher";
+                                Process.Start(eldorado);
+                                // If it got this far without throwing an exception, ElDewrito was successfully launched.
+                                // Notify the user of this.
+                                richTextBox1.Invoke(new appendNewOutputCallback(this.appendNewOutput), new object[] {
+                                    richTextBox1, "ElDewrito has ben launched!"
+                                });
+                            }
+                            else // If eldorado.exe doesn't exist, inform the user and return to break out of the DewRcon loop.
+                            {
+                                MessageBox.Show("Unable to locate \"eldorado.exe\". Is it in the correct folder?");
+                                return;
+                            }
                         }
-                        else // If eldorado.exe doesn't exist, inform the user and return to break out of the DewRcon loop.
+                        catch (Exception e)
                         {
-                            MessageBox.Show("Unable to locate \"eldorado.exe\". Is it in the correct folder?");
+                            // If an exception was thrown, ElDewrito did not launch for a reason other than it not existing in the
+                            // correct folder, as that would have been handled above. Inform the user and return to break out of the DewRcon loop;
+                            MessageBox.Show(e.Message);
                             return;
                         }
                     }
-                    catch (Exception ex)
-                    {
-                        // If an exception was thrown, ElDewrito did not launch for a reason other than it not existing in the
-                        // correct folder. Inform the user and return to break out of the DewRcon loop;
-                        MessageBox.Show(ex.Message);
-                        return;
-                    }
+
+                    // Close the websocket (even though it's probably already closed because
+                    // it failed to connect; no harm in being sure it's properly closed here.
+                    webSocket.Close();
+
+                    // Retry to connect to DewRcon and send the command.
+                    await DewRcon(cmd);
+                    return;
                 }
 
-                // Dispose of the ClientWebSocket object (even though it's probably already disposed automatically because
-                // it failed to connect; no harm in being sure it's properly disposed.
-                webSocket.Dispose();
-
-                // Retry to connect to DewRcon and send the command.
-                await DewRcon(cmd);
-                return;
-            }
-
-            // Don't send a blank command, as no response will be received
-            if (cmd != string.Empty)
-            {
-                // Send Command
-                byte[] sendBuffer = Encoding.UTF8.GetBytes(cmd);
-                await webSocket.SendAsync(new ArraySegment<byte>(sendBuffer), WebSocketMessageType.Text, false, CancellationToken.None);
-
-                // Receive response                        8kb seems to be enough to contain any response, using 16kb for good measure...
-                byte[] receiveBuffer = new byte[16384]; // not sure if this is good practice, but it seems to work perfectly...
-                var result = await webSocket.ReceiveAsync(new ArraySegment<byte>(receiveBuffer), CancellationToken.None);
-
-                // Display response in the RichTextBox to the right of the Server-List.
-                richTextBox1.Invoke(new appendNewOutputCallback(this.appendNewOutput), new object[] { richTextBox1, Encoding.UTF8.GetString(receiveBuffer).TrimEnd('\0') });
-                Console.Write(Encoding.UTF8.GetString(receiveBuffer).TrimEnd('\0'));
-            }
-
-            // Send "Close" message to the DewRcon server.
-            await webSocket.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, string.Empty, CancellationToken.None);
-            // Dispose the ClientWebSocketObject
-            webSocket.Dispose();
-            return;
+                // Don't send an empty DewRcon command.
+                if (cmd != string.Empty)
+                {
+                    webSocket.Send(Encoding.UTF8.GetBytes(cmd));
+                    webSocket.OnMessage += (sender, m) =>
+                    {
+                        // Display response in the RichTextBox to the right of the Server-List then close the WebSocket.
+                        richTextBox1.Invoke(new appendNewOutputCallback(this.appendNewOutput), new object[] {
+                            richTextBox1, Encoding.UTF8.GetString(m.RawData).TrimEnd('\0')
+                        });
+                        webSocket.Close();
+                        if (webSocket.ReadyState != WebSocketState.Closed && webSocket.ReadyState != WebSocketState.Closing)
+                            MessageBox.Show("OPEND!!!");
+                    };
+                }
+            });
         }
     }
 }

@@ -120,6 +120,8 @@
             this.D = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.A = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.panel3 = new System.Windows.Forms.Panel();
+            this.groupBox10 = new System.Windows.Forms.GroupBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.button9 = new System.Windows.Forms.Button();
@@ -150,6 +152,7 @@
             this.groupBox9.SuspendLayout();
             this.groupBox8.SuspendLayout();
             this.panel3.SuspendLayout();
+            this.groupBox10.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.SuspendLayout();
@@ -480,7 +483,7 @@
             this.infobar.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 72F));
             this.infobar.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 45F));
             this.infobar.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 55F));
-            this.infobar.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 174F));
+            this.infobar.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 178F));
             this.infobar.Controls.Add(this.infobarIcon, 0, 0);
             this.infobar.Controls.Add(this.infobarLPane, 1, 0);
             this.infobar.Controls.Add(this.infobarRPane, 2, 0);
@@ -511,7 +514,7 @@
             this.infobarLPane.Dock = System.Windows.Forms.DockStyle.Fill;
             this.infobarLPane.Location = new System.Drawing.Point(75, 3);
             this.infobarLPane.Name = "infobarLPane";
-            this.infobarLPane.Size = new System.Drawing.Size(257, 66);
+            this.infobarLPane.Size = new System.Drawing.Size(255, 66);
             this.infobarLPane.TabIndex = 1;
             // 
             // infobarCredits
@@ -549,9 +552,9 @@
             // 
             this.infobarRPane.Controls.Add(this.infobarDesc);
             this.infobarRPane.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.infobarRPane.Location = new System.Drawing.Point(338, 3);
+            this.infobarRPane.Location = new System.Drawing.Point(336, 3);
             this.infobarRPane.Name = "infobarRPane";
-            this.infobarRPane.Size = new System.Drawing.Size(316, 66);
+            this.infobarRPane.Size = new System.Drawing.Size(314, 66);
             this.infobarRPane.TabIndex = 2;
             // 
             // infobarDesc
@@ -563,17 +566,17 @@
             this.infobarDesc.Name = "infobarDesc";
             this.infobarDesc.ReadOnly = true;
             this.infobarDesc.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.infobarDesc.Size = new System.Drawing.Size(316, 66);
+            this.infobarDesc.Size = new System.Drawing.Size(314, 66);
             this.infobarDesc.TabIndex = 1;
             this.infobarDesc.Text = "infobarDesc";
             // 
             // infobarImage
             // 
             this.infobarImage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.infobarImage.Location = new System.Drawing.Point(657, 0);
+            this.infobarImage.Location = new System.Drawing.Point(653, 0);
             this.infobarImage.Margin = new System.Windows.Forms.Padding(0);
             this.infobarImage.Name = "infobarImage";
-            this.infobarImage.Size = new System.Drawing.Size(175, 72);
+            this.infobarImage.Size = new System.Drawing.Size(179, 72);
             this.infobarImage.TabIndex = 3;
             this.infobarImage.MouseClick += new System.Windows.Forms.MouseEventHandler(this.infobarImage_MouseClick);
             // 
@@ -657,7 +660,7 @@
             this.infobar2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 72F));
             this.infobar2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 45F));
             this.infobar2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 55F));
-            this.infobar2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 175F));
+            this.infobar2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 179F));
             this.infobar2.Controls.Add(this.infobar2Icon, 0, 0);
             this.infobar2.Controls.Add(this.panel4, 1, 0);
             this.infobar2.Controls.Add(this.panel5, 2, 0);
@@ -689,7 +692,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(75, 3);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(257, 66);
+            this.panel4.Size = new System.Drawing.Size(255, 66);
             this.panel4.TabIndex = 1;
             // 
             // infobar2Credits
@@ -727,9 +730,9 @@
             // 
             this.panel5.Controls.Add(this.infobar2Desc);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel5.Location = new System.Drawing.Point(338, 3);
+            this.panel5.Location = new System.Drawing.Point(336, 3);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(315, 66);
+            this.panel5.Size = new System.Drawing.Size(313, 66);
             this.panel5.TabIndex = 2;
             // 
             // infobar2Desc
@@ -741,17 +744,17 @@
             this.infobar2Desc.Name = "infobar2Desc";
             this.infobar2Desc.ReadOnly = true;
             this.infobar2Desc.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.infobar2Desc.Size = new System.Drawing.Size(315, 66);
+            this.infobar2Desc.Size = new System.Drawing.Size(313, 66);
             this.infobar2Desc.TabIndex = 1;
             this.infobar2Desc.Text = "infobar2Desc";
             // 
             // infobar2Image
             // 
             this.infobar2Image.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.infobar2Image.Location = new System.Drawing.Point(656, 0);
+            this.infobar2Image.Location = new System.Drawing.Point(652, 0);
             this.infobar2Image.Margin = new System.Windows.Forms.Padding(0);
             this.infobar2Image.Name = "infobar2Image";
-            this.infobar2Image.Size = new System.Drawing.Size(176, 72);
+            this.infobar2Image.Size = new System.Drawing.Size(180, 72);
             this.infobar2Image.TabIndex = 3;
             this.infobar2Image.MouseClick += new System.Windows.Forms.MouseEventHandler(this.infobar2Image_MouseClick);
             // 
@@ -1034,9 +1037,10 @@
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.SystemColors.Control;
-            this.panel3.Controls.Add(this.richTextBox1);
-            this.panel3.Controls.Add(this.groupBox5);
             this.panel3.Controls.Add(this.groupBox4);
+            this.panel3.Controls.Add(this.groupBox10);
+            this.panel3.Controls.Add(this.groupBox5);
+            this.panel3.Controls.Add(this.richTextBox1);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel3.Location = new System.Drawing.Point(832, 0);
             this.panel3.Margin = new System.Windows.Forms.Padding(0);
@@ -1044,21 +1048,40 @@
             this.panel3.Size = new System.Drawing.Size(158, 585);
             this.panel3.TabIndex = 3;
             // 
+            // groupBox10
+            // 
+            this.groupBox10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupBox10.Controls.Add(this.textBox2);
+            this.groupBox10.Location = new System.Drawing.Point(3, 435);
+            this.groupBox10.Name = "groupBox10";
+            this.groupBox10.Size = new System.Drawing.Size(152, 46);
+            this.groupBox10.TabIndex = 17;
+            this.groupBox10.TabStop = false;
+            this.groupBox10.Text = "Password";
+            this.groupBox10.Visible = false;
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(6, 19);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(140, 20);
+            this.textBox2.TabIndex = 0;
+            // 
             // richTextBox1
             // 
             this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.richTextBox1.Location = new System.Drawing.Point(3, 3);
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.ReadOnly = true;
-            this.richTextBox1.Size = new System.Drawing.Size(152, 318);
+            this.richTextBox1.Size = new System.Drawing.Size(152, 228);
             this.richTextBox1.TabIndex = 15;
-            this.richTextBox1.Text = "If a compatible server requires any mods, they will be listed here.";
+            this.richTextBox1.Text = "";
             // 
             // groupBox5
             // 
             this.groupBox5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.groupBox5.Controls.Add(this.button9);
-            this.groupBox5.Location = new System.Drawing.Point(3, 430);
+            this.groupBox5.Location = new System.Drawing.Point(3, 378);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(152, 51);
             this.groupBox5.TabIndex = 16;
@@ -1153,6 +1176,8 @@
             this.groupBox9.ResumeLayout(false);
             this.groupBox8.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
+            this.groupBox10.ResumeLayout(false);
+            this.groupBox10.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -1258,5 +1283,7 @@
         private System.Windows.Forms.ColumnHeader K;
         private System.Windows.Forms.ColumnHeader D;
         private System.Windows.Forms.ColumnHeader A;
+        private System.Windows.Forms.GroupBox groupBox10;
+        private System.Windows.Forms.TextBox textBox2;
     }
 }
